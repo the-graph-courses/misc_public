@@ -1,0 +1,429 @@
+---
+title: "R Basics & Beyond Course Survey"
+date: "2024-12-13"
+output: prettydoc::html_pretty
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Section 1 of 5  
+
+### GRAPH Courses Post-Course Survey
+
+Thank you in advance for taking your time to answer these questions.  
+
+Your feedback is extremely valuable in helping us continue to serve the global community of public health and data science learners.
+
+This survey is fully anonymous, and should take just 10-15 minutes.  
+
+Do you permit your anonymous responses to be used in an academic study on data skills for health professionals?
+
+- Yes  
+- No
+
+***
+
+## Section 2 of 5 
+
+### STUDENT BACKGROUND
+
+Gender  
+
+- Woman
+- Man 
+- Other
+
+Age group  
+
+- 0-20  
+- 21-30
+- 31-40 
+- 41-50
+- Above 50
+  
+
+Highest level of education completed
+
+- Secondary or below 
+- Bachelor's
+- Master's  
+- PhD
+- Other...
+
+
+Current profession (select any that apply)
+
+- Student
+- Clinician
+- Public health professional
+- Researcher/Academic  
+- Data professional
+- Other...
+
+
+Region of residence  
+
+- Africa  
+- Europe
+- Oceania
+- Asia
+- Northern America
+- Latin America & the Caribbean
+- Other...
+
+
+Did you receive financial aid for this course, or did you pay the full bootcamp fee of 145 USD per month?  
+
+- Received financial aid
+- Fee was paid personally
+- Fee was paid by my institution
+
+
+If you received financial aid, what percentage of your course fee was waived?  
+
+
+Is English your native language?  
+
+- Yes  
+- No
+
+
+Before this bootcamp, did you have experience with any programming languages?   
+
+- No experience  
+- Some experience  
+- Significant experience
+
+
+Before this bootcamp, did you have previous experience with statistics or data science?  
+
+- No experience  
+- Some experience
+- Significant experience
+
+
+Before this bootcamp, what challenges had you faced in developing data analysis skills? (Select any that apply)
+
+- Cost of available courses  
+- Absence of relevant training materials  
+- Time constraints with work/studies  
+- Lack of guidance and support with existing courses  
+- Other...
+
+
+***
+
+## Section 3 of 5
+
+### BOOTCAMP EXPERIENCE
+
+
+Were you able to complete the bootcamp and submit your final project?  
+
+- Yes  
+- Not yet but I hope to complete it in the coming weeks  
+- No, and I am unlikely to complete it due to constraints or other factors
+
+
+If you will be unable to complete the course, please indicate why:  
+
+- Course was too difficult  
+- Lost interest
+- Did not work with schedule  
+- Course was too fast 
+- Other...
+
+
+About how many hours per week, outside of the workshop, did you spend on the materials?  
+
+
+How helpful were the following bootcamp features?  
+
+- Pre-recorded video lessons  
+
+  * Not helpful  
+  * 1  
+  * 2
+  * 3  
+  * 4  
+  * 5
+  * 6  
+  * 7
+  * 8  
+  * 9  
+  * 10  
+  * Extremely helpful
+  
+- Lesson PDF/HTML handouts  
+
+  * Not helpful  
+  * 1  
+  * 2
+  * 3  
+  * 4  
+  * 5
+  * 6  
+  * 7
+  * 8  
+  * 9  
+  * 10  
+  * Extremely helpful
+
+- Multiple-choice prework quizzes  
+
+  * Not helpful  
+  * 1  
+  * 2
+  * 3  
+  * 4  
+  * 5
+  * 6  
+  * 7
+  * 8  
+  * 9  
+  * 10  
+  * Extremely helpful
+  
+- Data quizzes 
+
+  * Not helpful  
+  * 1  
+  * 2
+  * 3  
+  * 4  
+  * 5
+  * 6  
+  * 7
+  * 8  
+  * 9  
+  * 10  
+  * Extremely helpful
+  
+- Weekly live workshop sessions  
+
+  * Not helpful  
+  * 1  
+  * 2
+  * 3  
+  * 4  
+  * 5
+  * 6  
+  * 7
+  * 8  
+  * 9  
+  * 10  
+  * Extremely helpful
+  
+- Workshop interaction with peers  
+
+  * Not helpful  
+  * 1  
+  * 2
+  * 3  
+  * 4  
+  * 5
+  * 6  
+  * 7  
+  * 8  
+  * 9  
+  * 10  
+  * Extremely helpful
+  
+- Workshop interaction with facilitators/instructors  
+
+  * Not helpful  
+  * 1  
+  * 2
+  * 3  
+  * 4  
+  * 5
+  * 6  
+  * 7
+  * 8  
+  * 9  
+  * 10  
+  * Extremely helpful
+  
+- Feedback on workshop assignments  
+
+  * Not helpful  
+  * 1  
+  * 2
+  * 3  
+  * 4  
+  * 5
+  * 6  
+  * 7
+  * 8  
+  * 9  
+  * 10  
+  * Extremely helpful
+  
+- Using datasets that were health-relevant  
+
+  * Not helpful  
+  * 1  
+  * 2
+  * 3  
+  * 4  
+  * 5
+  * 6  
+  * 7
+  * 8  
+  * 9  
+  * 10  
+  * Extremely helpful
+  
+- Study halls with facilitators  
+
+  * Not helpful  
+  * 1  
+  * 2
+  * 3  
+  * 4  
+  * 5
+  * 6  
+  * 7
+  * 8  
+  * 9  
+  * 10  
+  * Extremely helpful
+  
+- Online help forum  
+
+  * Not helpful  
+  * 1  
+  * 2
+  * 3  
+  * 4  
+  * 5
+  * 6  
+  * 7
+  * 8  
+  * 9  
+  * 10  
+  * Extremely helpful
+  
+
+***
+
+## Section 4 of 5  
+
+### OUTCOMES
+
+
+How would you rate your skills in each of the following BEFORE the bootcamp?  
+
+- R programming
+
+  * No experience  
+  * Beginner
+  * Proficient
+  * Expert
+  
+- Data cleaning  
+
+  * No experience
+  * Beginner  
+  * Proficient
+  * Expert
+  
+- Data transformation
+
+  * No experience  
+  * Beginner
+  * Proficient 
+  * Expert
+  
+- Data visualization
+
+  * No experience
+  * Beginner
+  * Proficient
+  * Expert
+  
+
+How would you rate your skills in each of the following AFTER the bootcamp?  
+
+- R programming  
+
+  * No experience
+  * Beginner
+  * Proficient  
+  * Expert
+  
+- Data cleaning
+
+  * No experience  
+  * Beginner
+  * Proficient
+  * Expert
+  
+- Data transformation
+
+  * No experience
+  * Beginner
+  * Proficient
+  * Expert
+  
+- Data visualization
+
+  * No experience  
+  * Beginner 
+  * Proficient
+  * Expert
+  
+
+Has participating in the bootcamp led to any of the following? (Select any that apply)  
+
+- New career opportunity  
+- Increased use of data analysis in your role  
+- Presented or published data analysis work  
+- Further courses in data analysis
+- Other...
+
+
+Please explain how the course has helped you in your work or studies, or how you hope the course may help in the future.  
+
+
+Overall, are you satisfied with the quality of the bootcamp?  
+
+- Yes
+- No
+
+
+***
+
+## Section 5 of 5  
+
+### Final Comments
+
+
+On a scale of 1 to 10, how likely are you to recommend this bootcamp to a friend or colleague in your field?  
+
+* Very unlikely  
+* 1
+* 2
+* 3  
+* 4
+* 5
+* 6
+* 7  
+* 8
+* 9
+* 10  
+* Very likely
+
+
+Please share what you felt were the highlights of the course.  
+
+
+Please share any particular challenges you faced during the course  
+
+
+What topics should we add to a future version of this course, or to an intermediate course taken after this?  
+
+
+What recommendations do you have for improving the course?
