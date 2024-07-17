@@ -1,7 +1,7 @@
 Global Disease Burden Analysis \| Minimum viable report
 ================
-Mr. Average Joe
-2024-04-16
+GRAPH Courses Team
+2024-07-16
 
 # Introduction
 
@@ -59,7 +59,7 @@ Zambia and Zimbabwe had big increase due to HIV. Ghana not so much.
 Ghana is generally lower. Of course, this is not population-size
 adjusted.
 
-# Non-Communicable Disease Burden
+# Non-Communicable Disease Burden (NCD)
 
 ## Table of Estimates for NCD Burden Over Time
 
