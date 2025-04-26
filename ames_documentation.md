@@ -1,7 +1,10 @@
-**NAME:** AmesHousing
-**SIZE:** 2930 observations, 82 variables
-**DESCRIPTION / DESCRIPTIVE ABSTRACT:** Data set contains information from the Ames Assessor’s Office used in computing assessed values for individual residential properties sold in Ames, IA from 2006 to 2010. See below for detailed variable descriptions.
-**SOURCES:**
+- **NAME:** AmesHousing
+
+- **SIZE:** 2930 observations, 82 variables
+
+- **DESCRIPTION / DESCRIPTIVE ABSTRACT:** Data set contains information from the Ames Assessor’s Office used in computing assessed values for individual residential properties sold in Ames, IA from 2006 to 2010. See below for detailed variable descriptions.
+
+- **SOURCES:**
 *   Ames, Iowa Assessor’s Office
 *   De Cock, Dean. "Ames, Iowa: Alternative to the Boston housing data as an end of semester regression project." Journal of Statistics Education 19.3 (2011).
 
