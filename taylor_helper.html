@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Taylor R. Helper – Résumé</title>
+
+<style>
+/* ---------- Page geometry ---------- */
+@page {
+  size: A4;
+  margin: 20mm;
+}
+
+body{
+  margin:0;
+  font-family:"Georgia","Times New Roman",serif;
+  line-height:1.25;
+  color:#000;
+  background:#fff;
+}
+
+/* Wrapper that mimics the physical sheet */
+.page{
+  width:210mm;           /* A4 width */
+  min-height:297mm;      /* A4 height */
+  margin:0 auto;
+  box-sizing:border-box;
+}
+
+/* ---------- Typographic hierarchy ---------- */
+header{ text-align:center; margin-bottom:12pt; }
+header h1{ margin:0; font-size:24pt; font-weight:700; }
+header .contact{ font-size:10pt; margin-top:4pt; }
+
+section{ margin-bottom:14pt; }
+section h2{
+  font-size:13pt;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  margin:0 0 4pt;
+  border-bottom:1px solid #000;
+}
+
+/* Entry blocks (education, jobs, etc.) */
+.entry{ margin-bottom:7pt; }
+
+.title-line{
+  display:flex;
+  justify-content:space-between;
+  font-weight:600;
+  flex-wrap:wrap;
+  gap:4pt;
+}
+
+.subtitle-line{ font-style:italic; }
+
+ul{ margin:4pt 0 0 14pt; padding:0; }
+li{ margin-bottom:2pt; }
+
+/* Optional: avoid page break inside any .entry when printing */
+@media print{
+  .entry{ break-inside:avoid; }
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- ======= HEADER ======= -->
+  <header>
+    <h1>Taylor&nbsp;R.&nbsp;Helper</h1>
+    <div class="contact">
+      91&nbsp;Flintstone&nbsp;Drive • Lanstown, PA 19406 • 123-345-5678 •
+      <a href="mailto:TH647583@wcupa.edu">TH647583@wcupa.edu</a>
+    </div>
+  </header>
+
+  <!-- ======= EDUCATION ======= -->
+  <section>
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="title-line">
+        <span><strong>West Chester University of Pennsylvania</strong>, West Chester PA</span>
+        <span>May 2017</span>
+      </div>
+      <div>Bachelor of Science in Public Health: Health Promotion</div>
+      <ul>
+        <li>GPA: 3.83</li>
+        <li>Certified Health Education Specialist Exam (Feb 2014)</li>
+      </ul>
+      <div class="subtitle-line">
+        Honors: Academic Dean’s List — Fall 2014 – Spring 2016
+      </div>
+      <div class="subtitle-line">
+        Completed coursework: Program Planning &amp; Evaluation; Health Behavior; Chronic and
+        Communicable Diseases; Health Marketing and Communications; Health Curriculum and
+        Instruction; Public/Community Health; Health Care Delivery; Transcultural Health
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= LEADERSHIP ======= -->
+  <section>
+    <h2>Leadership</h2>
+
+    <div class="entry">
+      <div class="title-line">
+        <span><strong>Alpha Phi Omega National Service Fraternity</strong>, WCU</span>
+        <span>Sep 2014 – Present</span>
+      </div>
+      <ul>
+        <li>Vice President of Membership (2015): mentored 12-member Spring 2013 pledge class</li>
+        <li>Coordinated 30 volunteers; awarded “Best Theme.”</li>
+        <li>Scouting &amp; Youth Chair (2014): liaison for youth groups; coordinated weekly service</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="title-line">
+        <span><strong>Delta Chi Fraternity</strong>, West Chester University</span>
+        <span>Sep 2013 – Present</span>
+      </div>
+      <div>Public Relations Chair (2013)</div>
+    </div>
+
+    <div class="entry">
+      <div class="title-line">
+        <span><strong>Pennsylvania Public Health Association</strong></span>
+        <span>Sep 2013 – Present</span>
+      </div>
+      <div>Student Member</div>
+    </div>
+  </section>
+
+  <!-- ======= EXPERIENCE ======= -->
+  <section>
+    <h2>Experience</h2>
+
+    <div class="entry">
+      <div class="title-line">
+        <span><strong>Data Entry Specialist</strong>, Icon Clinical Research, North Wales PA</span>
+        <span>Sep 2016 – Present</span>
+      </div>
+      <ul>
+        <li>Assisted CDC in managing confidential study information</li>
+        <li>Processed departmental query requests; liaison to site coordinators for query resolution</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="title-line">
+        <span><strong>Summer Support Coordinator</strong>, Kennett Square Family Center</span>
+        <span>May – Aug 2016</span>
+      </div>
+      <ul>
+        <li>Developed standards-based curriculum for Elementary Transition Program</li>
+        <li>Supervised 20 children during the three-hour school day</li>
+        <li>Coordinated summer programs promoting healthy habits for children</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="title-line">
+        <span><strong>Volunteer</strong>, Kennett Square Family Center</span>
+        <span>Jun 2014 – Apr 2016</span>
+      </div>
+      <ul>
+        <li>Assisted with monthly community events; honed communication &amp; teamwork skills</li>
+        <li>Handled admin tasks: filing, correspondence, supply orders</li>
+        <li>Coordinated Dental Health Fair (Jun 2009) for 70 participants</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======= CONFERENCES ======= -->
+  <section>
+    <h2>Conferences</h2>
+
+    <div class="entry">
+      <div class="title-line">
+        <span><em>Integrative Health Conference</em> — Childhood Obesity Trends, WCU</span>
+        <span>Mar 2016</span>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="title-line">
+        <span><em>Health Education Advocacy Summit</em>, Washington D.C.</span>
+        <span>Mar 2015</span>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="title-line">
+        <span><em>Volunteer Leadership Retreat</em>, West Chester University, PA</span>
+        <span>Sep 2014</span>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="title-line">
+        <span><em>Executive Leadership Retreat</em>, Camp Saginaw PA</span>
+        <span>Sep 2014</span>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /.page -->
+</body>
+</html>
