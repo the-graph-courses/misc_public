@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Image Generation — Prework Quiz</title>
+<style>
+  :root {
+    --dark-teal: #00565e;
+    --light-teal: #5fbfbf;
+    --yellow: #f5c542;
+    --yellow-light: #fdf3d7;
+    --white: #ffffff;
+    --bg: #f4f7f7;
+    --text: #1a2a2a;
+    --border: #d0dede;
+    --green: #27ae60;
+    --green-bg: #e8f8ef;
+    --red: #e04040;
+    --red-bg: #fdecea;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.55; padding: 1.5rem 1rem; }
+  .quiz-container { max-width: 740px; margin: 0 auto; }
+
+  header { text-align: center; margin-bottom: 1.5rem; border-bottom: 3px solid var(--yellow); padding-bottom: 1.2rem; }
+  header h1 { color: var(--dark-teal); font-size: 1.35rem; font-weight: 700; }
+  header p { color: #5a7a7a; font-size: 0.9rem; margin-top: 0.25rem; }
+
+  /* ---- Progress Dots ---- */
+  .progress-bar { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .dot {
+    width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 0.82rem; font-weight: 700; color: #6a8a8a; background: var(--white); border: 2.5px solid var(--border);
+    cursor: pointer; transition: all 0.15s; user-select: none;
+  }
+  .dot.current { background: var(--light-teal); border-color: var(--light-teal); color: var(--white); box-shadow: 0 0 0 3px rgba(95,191,191,0.3); }
+  .dot.answered { border-color: var(--light-teal); color: var(--light-teal); position: relative; }
+  .dot.answered::after { content: ''; position: absolute; top: 2px; right: 2px; width: 8px; height: 8px; border-radius: 50%; background: var(--light-teal); }
+  .dot.correct { background: var(--green); border-color: var(--green); color: var(--white); }
+  .dot.correct::after { display: none; }
+  .dot.incorrect { background: var(--red); border-color: var(--red); color: var(--white); }
+  .dot.incorrect::after { display: none; }
+
+  .legend { display: flex; justify-content: center; gap: 1.1rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: #6a8a8a; flex-wrap: wrap; }
+  .legend span { display: flex; align-items: center; gap: 0.3rem; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+  .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  .q-counter { font-size: 0.85rem; font-weight: 600; color: var(--dark-teal); }
+  .btn-summary { background: var(--dark-teal); color: var(--white); border: none; padding: 0.5rem 1.1rem; border-radius: 20px; font-size: 0.82rem; font-weight: 600; cursor: pointer; }
+  .btn-summary:hover { background: #003d43; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin-bottom: 1.8rem; }
+
+  /* ---- Question Area ---- */
+  .question-card { display: none; }
+  .question-card.active { display: block; }
+  .q-text { font-size: 1.05rem; font-weight: 500; color: var(--text); margin-bottom: 1.3rem; line-height: 1.5; }
+
+  /* ---- Options ---- */
+  .options { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; }
+  .options label {
+    display: flex; align-items: center; gap: 0.75rem; padding: 0.85rem 1rem;
+    border: 2px solid var(--border); border-radius: 8px; cursor: pointer;
+    font-size: 0.95rem; transition: border-color 0.15s, background 0.15s;
+  }
+  .options label:hover { border-color: var(--light-teal); background: #eaf6f6; }
+  .options input[type="radio"] { appearance: none; -webkit-appearance: none; width: 20px; height: 20px; border: 2px solid #b0c8c8; border-radius: 50%; flex-shrink: 0; transition: all 0.12s; position: relative; }
+  .options input[type="radio"]:checked { border-color: var(--dark-teal); background: var(--dark-teal); }
+  .options input[type="radio"]:checked::after { content: ''; position: absolute; top: 4px; left: 4px; width: 8px; height: 8px; background: var(--white); border-radius: 50%; }
+
+  .options label.correct { border-color: var(--green); background: var(--green-bg); }
+  .options label.correct input[type="radio"] { border-color: var(--green); background: var(--green); }
+  .options label.incorrect { border-color: var(--red); background: var(--red-bg); }
+  .options label.incorrect input[type="radio"] { border-color: var(--red); background: var(--red); }
+  .options label.reveal { border-color: var(--green); background: var(--green-bg); }
+  .options label.reveal input[type="radio"] { border-color: var(--green); background: var(--green); }
+  .options label.disabled { pointer-events: none; opacity: 0.55; }
+  .options label.correct.disabled, .options label.incorrect.disabled, .options label.reveal.disabled { opacity: 1; }
+
+  /* ---- Feedback banner + explanation ---- */
+  .feedback { display: none; margin-bottom: 1.2rem; border-radius: 8px; overflow: hidden; }
+  .feedback.show { display: block; }
+  .feedback-banner { padding: 0.6rem 1rem; font-weight: 700; font-size: 0.92rem; display: flex; align-items: center; gap: 0.5rem; }
+  .feedback-banner.is-correct { background: var(--green); color: var(--white); }
+  .feedback-banner.is-incorrect { background: var(--red); color: var(--white); }
+  .feedback-explanation { padding: 0.85rem 1rem; font-size: 0.9rem; line-height: 1.5; }
+  .feedback.is-correct .feedback-explanation { background: var(--green-bg); color: #1a3a24; }
+  .feedback.is-incorrect .feedback-explanation { background: var(--red-bg); color: #3a1a1a; }
+
+  /* ---- Bottom Buttons ---- */
+  .btn-row { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; }
+  .btn {
+    border: none; padding: 0.6rem 1.4rem; border-radius: 20px; font-size: 0.88rem; font-weight: 600;
+    cursor: pointer; transition: background 0.15s; display: inline-flex; align-items: center; gap: 0.4rem;
+  }
+  .btn:disabled { opacity: 0.45; cursor: default; }
+  .btn-nav { background: var(--light-teal); color: var(--white); }
+  .btn-nav:hover:not(:disabled) { background: #4aadad; }
+  .btn-check { background: var(--dark-teal); color: var(--white); }
+  .btn-check:hover:not(:disabled) { background: #003d43; }
+  .btn-submit { background: var(--yellow); color: var(--dark-teal); font-weight: 700; font-size: 0.95rem; padding: 0.75rem 2rem; }
+  .btn-submit:hover { background: #e8b530; }
+
+  /* Submit bar */
+  .submit-bar { display: none; text-align: center; margin-top: 1.5rem; padding: 1.2rem; background: var(--yellow-light); border: 2px solid var(--yellow); border-radius: 10px; }
+  .submit-bar.show { display: block; }
+  .submit-bar p { font-size: 0.9rem; color: var(--dark-teal); margin-bottom: 0.8rem; font-weight: 500; }
+
+  /* ---- Summary Overlay ---- */
+  .summary-overlay { display: none; position: fixed; inset: 0; background: rgba(0,40,44,0.45); z-index: 100; justify-content: center; align-items: center; }
+  .summary-overlay.show { display: flex; }
+  .summary-box { background: var(--white); border-radius: 14px; padding: 2rem 2rem 1.6rem; max-width: 440px; width: 90%; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.18); }
+  .summary-box h2 { color: var(--dark-teal); margin-bottom: 0.3rem; font-size: 1.25rem; }
+  .summary-emoji { font-size: 2.8rem; margin: 0.5rem 0; }
+  .summary-box .score-text { font-size: 2.2rem; font-weight: 800; color: var(--dark-teal); margin: 0.3rem 0; }
+  .summary-box .score-sub { font-size: 0.95rem; color: #4a6a6a; margin-bottom: 1.2rem; line-height: 1.45; }
+  .summary-box .btn { margin: 0.3rem; }
+  .btn-close-sum { background: var(--light-teal); color: var(--white); }
+  .btn-reset { background: var(--dark-teal); color: var(--white); }
+</style>
+</head>
+<body>
+<div class="quiz-container">
+
+<header>
+  <h1>AI Image Generation — Prework Quiz</h1>
+  <p>thegraphcourses.org</p>
+</header>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="legend">
+  <span><span class="legend-dot" style="background:var(--light-teal);"></span> Current</span>
+  <span><span class="legend-dot" style="background:var(--white); border: 2px solid var(--light-teal);"></span> Answered</span>
+  <span><span class="legend-dot" style="background:var(--green);"></span> Correct</span>
+  <span><span class="legend-dot" style="background:var(--red);"></span> Incorrect</span>
+</div>
+
+<div class="top-row">
+  <span class="q-counter" id="qCounter">Question 1 of 6</span>
+  <button class="btn-summary" id="summaryBtn">Quiz Summary</button>
+</div>
+
+<hr class="divider">
+
+<!--
+  ============================================================
+  HOW TO EDIT QUESTIONS
+  ============================================================
+  Each question is a <div class="question-card">.
+
+  • Change the question text inside <p class="q-text">.
+  • Change option text inside the <span> tags.
+  • Set the correct answer with:  data-answer="a", "b", or "c"
+    (must match the option's data-option value).
+  • Edit the explanation inside the <div class="feedback"> block.
+
+  To ADD a question: copy any question-card block, paste it
+  below the last one, and update the text + data-answer.
+  The JS handles numbering and navigation automatically.
+
+  To REMOVE a question: delete the entire question-card block.
+  ============================================================
+-->
+
+<!-- QUESTION 1 -->
+<div class="question-card" data-answer="b">
+  <p class="q-text">A diffusion model generates images by starting from random noise. One practical implication of this for users is:</p>
+  <div class="options">
+    <label data-option="a"><input type="radio" value="a"><span>You need to provide a starting image for the model to work with</span></label>
+    <label data-option="b"><input type="radio" value="b"><span>Every generation is unique — even the same prompt will give different results</span></label>
+    <label data-option="c"><input type="radio" value="c"><span>The noisier your prompt, the better the result</span></label>
+  </div>
+  <div class="feedback">
+    <div class="feedback-banner"></div>
+    <div class="feedback-explanation">Because the model starts from random noise each time, every generation follows a different path — so even identical prompts produce different images.</div>
+  </div>
+</div>
+
+<!-- QUESTION 2 -->
+<div class="question-card" data-answer="b">
+  <p class="q-text">When you type a prompt into an AI image generator, the output image is:</p>
+  <div class="options">
+    <label data-option="a"><input type="radio" value="a"><span>Retrieved from a database of images the model was trained on</span></label>
+    <label data-option="b"><input type="radio" value="b"><span>Generated as a new image that may not exist anywhere else</span></label>
+    <label data-option="c"><input type="radio" value="c"><span>Stitched together from digital cut-outs of existing photos</span></label>
+  </div>
+  <div class="feedback">
+    <div class="feedback-banner"></div>
+    <div class="feedback-explanation">AI image generators create new images from learned patterns — they don't store or retrieve training images. Each output is a novel composition.</div>
+  </div>
+</div>
+
+<!-- QUESTION 3 -->
+<div class="question-card" data-answer="b">
+  <p class="q-text">The training data for large text-to-image models mostly comes from:</p>
+  <div class="options">
+    <label data-option="a"><input type="radio" value="a"><span>Professionally licensed stock photo libraries</span></label>
+    <label data-option="b"><input type="radio" value="b"><span>Image–text pairs scraped from the internet</span></label>
+    <label data-option="c"><input type="radio" value="c"><span>Images submitted by users of the tool</span></label>
+  </div>
+  <div class="feedback">
+    <div class="feedback-banner"></div>
+    <div class="feedback-explanation">Most large text-to-image models are trained on massive datasets of image–text pairs collected (scraped) from publicly accessible web pages.</div>
+  </div>
+</div>
+
+<!-- QUESTION 4 -->
+<div class="question-card" data-answer="a">
+  <p class="q-text">The videos explain that training datasets often pair images with their alt text from websites. This means:</p>
+  <div class="options">
+    <label data-option="a"><input type="radio" value="a"><span>The model's ability to understand a concept depends on how often and how well people described it online</span></label>
+    <label data-option="b"><input type="radio" value="b"><span>The model learns directly from the visual content of images, so text descriptions don't really matter</span></label>
+    <label data-option="c"><input type="radio" value="c"><span>The model can only generate images of things that have alt text on the internet</span></label>
+  </div>
+  <div class="feedback">
+    <div class="feedback-banner"></div>
+    <div class="feedback-explanation">Since the model learns to associate images with their text descriptions, the quality and frequency of those descriptions directly affects how well the model understands any given concept.</div>
+  </div>
+</div>
+
+<!-- QUESTION 5 -->
+<div class="question-card" data-answer="b">
+  <p class="q-text">In the autoregressive approach to image generation (as used by Google's Parti), images are generated by:</p>
+  <div class="options">
+    <label data-option="a"><input type="radio" value="a"><span>Starting from noise and gradually removing it</span></label>
+    <label data-option="b"><input type="radio" value="b"><span>Breaking the image into visual tokens and predicting them one at a time, like words in a sentence</span></label>
+    <label data-option="c"><input type="radio" value="c"><span>Searching a database for the closest matching image</span></label>
+  </div>
+  <div class="feedback">
+    <div class="feedback-banner"></div>
+    <div class="feedback-explanation">Autoregressive models like Parti convert images into sequences of visual tokens and then predict each token in order — the same way language models predict the next word.</div>
+  </div>
+</div>
+
+<!-- QUESTION 6 -->
+<div class="question-card" data-answer="c">
+  <p class="q-text">As of 2026, which of the following best describes the current state of copyright law around AI-generated images?</p>
+  <div class="options">
+    <label data-option="a"><input type="radio" value="a"><span>AI-generated images are automatically copyrighted by the person who wrote the prompt</span></label>
+    <label data-option="b"><input type="radio" value="b"><span>AI-generated images are illegal to use commercially</span></label>
+    <label data-option="c"><input type="radio" value="c"><span>The legal questions around both training data and generated outputs are largely unresolved</span></label>
+  </div>
+  <div class="feedback">
+    <div class="feedback-banner"></div>
+    <div class="feedback-explanation">Copyright law has not yet caught up with AI image generation. Key questions — about the legality of training data use and the copyright status of AI outputs — remain largely unresolved as of 2026.</div>
+  </div>
+</div>
+
+<!-- Submit bar (shown after last question) -->
+<div class="submit-bar" id="submitBar">
+  <p>You've reached the end of the quiz!</p>
+  <button class="btn btn-submit" id="submitBtn">See My Results</button>
+</div>
+
+<!-- Summary Overlay -->
+<div class="summary-overlay" id="summaryOverlay">
+  <div class="summary-box">
+    <h2>Quiz Complete!</h2>
+    <div class="summary-emoji" id="summaryEmoji"></div>
+    <div class="score-text" id="scoreText">—</div>
+    <div class="score-sub" id="scoreSub"></div>
+    <div>
+      <button class="btn btn-close-sum" id="closeSum">Review Answers</button>
+      <button class="btn btn-reset" id="resetBtn">Try Again</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  var cards   = Array.prototype.slice.call(document.querySelectorAll('.question-card'));
+  var total   = cards.length;
+  var current = 0;
+  var state   = [];
+
+  cards.forEach(function (card, i) {
+    state.push({ picked: null, checked: false, correct: false });
+    card.querySelectorAll('input[type="radio"]').forEach(function (r) {
+      r.name = 'q' + i;
+      r.addEventListener('change', function () {
+        state[i].picked = r.value;
+        updateDots();
+        if (i === current && !state[i].checked) checkBtn.disabled = false;
+      });
+    });
+  });
+
+  /* Build dots */
+  var bar = document.getElementById('progressBar');
+  cards.forEach(function (_, i) {
+    var d = document.createElement('div');
+    d.className = 'dot';
+    d.textContent = i + 1;
+    d.addEventListener('click', function () { goTo(i); });
+    bar.appendChild(d);
+  });
+
+  /* Shared buttons */
+  var btnRow   = document.createElement('div'); btnRow.className = 'btn-row';
+  var prevBtn  = document.createElement('button'); prevBtn.className = 'btn btn-nav'; prevBtn.textContent = '\u2B05 Previous';
+  var nextBtn  = document.createElement('button'); nextBtn.className = 'btn btn-nav'; nextBtn.textContent = 'Next Question \u27A1';
+  var checkBtn = document.createElement('button'); checkBtn.className = 'btn btn-check'; checkBtn.textContent = 'Check \uD83D\uDD0D';
+  prevBtn.addEventListener('click', function () { goTo(current - 1); });
+  nextBtn.addEventListener('click', function () { goTo(current + 1); });
+  checkBtn.addEventListener('click', function () { checkAnswer(current); });
+
+  var qCounter  = document.getElementById('qCounter');
+  var submitBar = document.getElementById('submitBar');
+
+  function goTo(i) {
+    if (i < 0 || i >= total) return;
+    cards[current].classList.remove('active');
+    current = i;
+    cards[current].classList.add('active');
+    render();
+  }
+
+  function render() {
+    if (btnRow.parentNode) btnRow.parentNode.removeChild(btnRow);
+    btnRow.innerHTML = '';
+    qCounter.textContent = 'Question ' + (current + 1) + ' of ' + total;
+
+    /* Left side: Previous */
+    if (current > 0) btnRow.appendChild(prevBtn);
+    else btnRow.appendChild(document.createElement('div'));
+
+    /* Right side: buttons */
+    var rightGroup = document.createElement('div');
+    rightGroup.style.cssText = 'display:flex; gap:0.5rem;';
+
+    if (!state[current].checked) {
+      checkBtn.disabled = !state[current].picked;
+      rightGroup.appendChild(checkBtn);
+    }
+
+    if (current < total - 1) {
+      rightGroup.appendChild(nextBtn);
+    }
+
+    btnRow.appendChild(rightGroup);
+    cards[current].appendChild(btnRow);
+
+    /* Show submit bar on last question */
+    submitBar.classList.toggle('show', current === total - 1);
+
+    updateDots();
+  }
+
+  function checkAnswer(i) {
+    var card = cards[i], answer = card.getAttribute('data-answer'), picked = state[i].picked;
+    if (!picked) return;
+    state[i].checked = true;
+    state[i].correct = (picked === answer);
+
+    card.querySelectorAll('label').forEach(function (label) {
+      var opt = label.getAttribute('data-option');
+      label.classList.add('disabled');
+      if (opt === answer)       label.classList.add(picked === answer ? 'correct' : 'reveal');
+      else if (opt === picked)  label.classList.add('incorrect');
+    });
+
+    /* Show feedback with color + text indicator */
+    var fb     = card.querySelector('.feedback');
+    var banner = card.querySelector('.feedback-banner');
+    var isRight = state[i].correct;
+
+    fb.classList.add('show', isRight ? 'is-correct' : 'is-incorrect');
+    banner.classList.add(isRight ? 'is-correct' : 'is-incorrect');
+    banner.textContent = isRight ? '\u2705  Correct!' : '\u274C  Incorrect';
+
+    render();
+  }
+
+  function updateDots() {
+    var dots = bar.querySelectorAll('.dot');
+    dots.forEach(function (d, i) {
+      d.className = 'dot';
+      if (i === current)                               d.classList.add('current');
+      else if (state[i].checked && state[i].correct)   d.classList.add('correct');
+      else if (state[i].checked && !state[i].correct)  d.classList.add('incorrect');
+      else if (state[i].picked)                        d.classList.add('answered');
+    });
+  }
+
+  /* Summary */
+  var overlay = document.getElementById('summaryOverlay');
+
+  function showSummary() {
+    /* Auto-check any unchecked questions that have a selection */
+    cards.forEach(function (card, i) {
+      if (!state[i].checked && state[i].picked) checkAnswer(i);
+    });
+
+    var done  = state.filter(function (s) { return s.checked; }).length;
+    var right = state.filter(function (s) { return s.correct; }).length;
+    var pct   = done > 0 ? Math.round((right / total) * 100) : 0;
+
+    document.getElementById('scoreText').textContent = done === 0 ? '—' : right + ' / ' + total;
+
+    var emoji, msg;
+    if (done === 0) {
+      emoji = '🤔'; msg = 'No questions answered yet — give it a go!';
+    } else if (pct === 100) {
+      emoji = '🎉'; msg = 'Perfect score — outstanding work! You\'re well prepared for the lesson.';
+    } else if (pct >= 80) {
+      emoji = '🌟'; msg = 'Excellent! You have a strong grasp of the material. Review the ones you missed and you\'ll be all set.';
+    } else if (pct >= 50) {
+      emoji = '💪'; msg = 'Good effort! You\'re building a solid foundation. Review the explanations to strengthen your understanding.';
+    } else {
+      emoji = '📚'; msg = 'Great start! The prework material will help fill in the gaps. Don\'t worry — that\'s exactly what this quiz is for.';
+    }
+
+    document.getElementById('summaryEmoji').textContent = emoji;
+    document.getElementById('scoreSub').textContent = msg;
+    overlay.classList.add('show');
+  }
+
+  document.getElementById('summaryBtn').addEventListener('click', showSummary);
+  document.getElementById('submitBtn').addEventListener('click', showSummary);
+  document.getElementById('closeSum').addEventListener('click', function () { overlay.classList.remove('show'); });
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) overlay.classList.remove('show'); });
+
+  /* Reset */
+  document.getElementById('resetBtn').addEventListener('click', function () {
+    overlay.classList.remove('show');
+    cards.forEach(function (card, i) {
+      state[i] = { picked: null, checked: false, correct: false };
+      card.querySelectorAll('label').forEach(function (l) {
+        l.className = ''; l.setAttribute('data-option', l.getAttribute('data-option'));
+      });
+      card.querySelectorAll('input[type="radio"]').forEach(function (r) { r.checked = false; });
+      var fb = card.querySelector('.feedback');
+      fb.className = 'feedback';
+      fb.querySelector('.feedback-banner').className = 'feedback-banner';
+      fb.querySelector('.feedback-banner').textContent = '';
+      card.classList.remove('active');
+    });
+    current = 0;
+    cards[0].classList.add('active');
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* Init */
+  cards[0].classList.add('active');
+  render();
+})();
+</script>
+</body>
+</html>
