@@ -1,0 +1,200 @@
+order_number,sex,health_area_name,zone_num,visit_day,visit_month,disease_past_month,vitamin_a_received,feeding_mode,water_container_washing_freq,arv_treatment
+135,m,Ekounou,45,24,08.2021,COUGH,Yes,Mixed feeding,Before each refill,TDF+3TC+EFV
+154,f,Ekounou,53,25,08.2021,Malaria,Yes,Mixed feeding,Before each refill,AZT+3TC+NVP
+166,m,Ekounou,55,26,08.2021,Cough,No,Mixed feeding,Never,TDF+3TC+EFV
+179,m,Meyo,75,28,08.2021,Flu,Yes,Mixed feeding,Before each refill,TDF+3TC+EFV
+42,f,Mimboman 1,5,19,08.2021,skin    spots,No,Mixed feeding,Before each refill,AZT+3TC+NVP
+27,f,Mimboman 2,10,17,08.2021,INTESTINAL WORMS,Yes,Mixed feeding,Never,AZT+3TC+NVP
+35,f,Mimboman 2,8,18,08.2021,Teething,Yes,Mixed feeding,Before each refill,TDF+3TC+EFV
+61,f,Mimboman 2,12,20,08.2021,Skin   spots,Yes,Mixed feeding,Before each refill,TDF+3TC+EFV
+77,f,Mimboman 2,12,20,08.2021,skin problem,Yes,Mixed feeding,Before each refill,TDF+3TC+EFV
+83,f,Mimboman 2,15,20,08.2021,Cough,No,Mixed feeding,Before each refill,TDF+3TC+EFV
+163,m,Odza,60,26,08.2021,Cold,Yes,Mixed feeding,At least once a month,TDF+3TC+EFV
+164,m,Odza,60,26,08.2021,Cold,Yes,Mixed feeding,At least once a day,TDF+3TC+EFV
+198,m,Odza,69,31,08.2021,Cough,Yes,Mixed feeding,Never,AZT+3TC+NVP
+23,m,Mimboman 1,4,17,08.2021,COUGH,Yes,Artificial milk,Before each refill,AZT+3TC+NVP
+86,m,Ekounou,47,21,08.2021,FLU,Yes,Milk and foods,At least once a day,AZT+3TC+EFV
+140,m,Ekounou,51,25,08.2021,Diarrhea,Yes,Milk and foods,Before each refill,TDF+3TC+EFV
+142,m,Ekounou,51,25,08.2021,diarrhea,No,Milk and foods,Never,AZT+3TC+NVP
+152,f,Ekounou,53,25,08.2021,Malaria,No,Milk and foods,Before each refill,TDF+3TC+EFV
+43,m,Kodengui,19,19,08.2021,Bronchitis,Yes,Milk and foods,Never,TDF+3TC+EFV
+55,m,Kodengui,19,19,08.2021,Cough,Yes,Milk and foods,Never,TDF+3TC+EFV
+82,m,Kodengui,19,20,08.2021,Cough,Yes,Milk and foods,Never,TDF+3TC+EFV
+6,f,Mimboman 1,4,17,08.2021,Flu,No,Milk and foods,Before each refill,TDF+3TC+EFV
+33,f,Mimboman 1,1,18,08.2021,Malaria,Yes,Milk and foods,Before each refill,AZT+3TC+NVP
+15,f,Mimboman 2,7,17,08.2021,Malaria,No,Milk and foods,At least once a day,TDF+3TC+EFV
+46,f,Mimboman 2,11,19,08.2021,Diarrhea,Yes,Milk and foods,Before each refill,TDF+3TC+EFV
+54,m,mimboman 2,11,19,08.2021,Cold,Yes,Milk and foods,Before each refill,TDF+3TC+EFV
+76,f,Mimboman 2,15,20,08.2021,Malaria,No,Milk and foods,Before each refill,AZT+3TC+NVP
+4,f,Mimboman 9,9,17,08.2021,fever,Yes,Milk and foods,At least once a week,AZT+3TC+NVP
+108,m,Nkoldongo 1,29,22,08.2021,Cough,Yes,Milk and foods,Never,TDF+3TC+EFV
+175,m,Odza,65,27,07.2021,Cold,No,Milk and foods,Never,AZT+3TC+NVP
+165,m,Ekounou,55,26,07.2021,Cough,No,Exclusive breastfeeding,Never,TDF+3TC+EFV
+172,f,Ekounou,44,27,07.2021,Flu,Yes,Exclusive breastfeeding,Never,TDF+3TC+EFV
+178,f,Meyo,75,28,07.2021,Flu,No,Exclusive breastfeeding,Before each refill,TDF+3TC+EFV
+10,m,Mimboman 1,5,17,07.2021,Stomach ache,No,Exclusive breastfeeding,At least once a week,TDF+3TC+EFV
+134,m,Odza,61,24,07.2021,Malaria,No,Exclusive breastfeeding,Before each refill,AZT+3TC+NVP
+85,f,Ekounou,47,21,07.2021,Flu,Yes,Same foods,At least once a day,AZT+3TC+NVP
+87,f,Ekounou,47,21,07.2021,FLU,Yes,Same foods,At least once a day,TDF+3TC+EFV
+88,f,Ekounou,47,21,07.2021,FLU,Yes,Same foods,At least once a day,AZT+3TC+NVP
+89,m,Ekounou,47,21,07.2021,FLU,Yes,Same foods,At least once a day,AZT+3TC+NVP
+94,f,Ekounou,47,21,07.2021,COUGH,Yes,Same foods,At least once a day,AZT+3TC+NVP
+95,f,Ekounou,47,21,07.2021,COUGH,Yes,Same foods,At least once a day,D4T+3TC+NVP
+96,f,Ekounou,47,21,07.2021,COUGH,Yes,Same foods,At least once a day,D4T+3TC+NVP
+124,m,Ekounou,45,24,07.2021,Flu,Yes,Same foods,Before each refill,TDF+3TC+EFV
+127,f,Ekounou,43,24,07.2021,MALARIA,Yes,Same foods,Before each refill,AZT+3TC+NVP
+128,f,Ekounou,43,24,07.2021,Malaria,No,Same foods,Before each refill,AZT+3TC+NVP
+129,f,Ekounou,45,24,07.2021,Malaria,No,Same foods,Before each refill,AZT+3TC+NVP
+130,m,Ekounou,45,24,07.2021,Malaria,No,Same foods,Never,TDF+3TC+EFV
+131,m,Ekounou,45,24,07.2021,Malaria,No,Same foods,Never,TDF+3TC+EFV
+132,m,Ekounou,45,24,07.2021,Malaria,No,Same foods,Never,TDF+3TC+EFV
+136,m,Ekounou,45,24,07.2021,COUGH,No,Same foods,Before each refill,AZT+3TC+NVP
+141,m,Ekounou,51,25,07.2021,diarrhea,Yes,Same foods,Before each refill,TDF+3TC+EFV
+143,m,Ekounou,51,25,07.2021,Diarrhea,Yes,Same foods,Before each refill,AZT+3TC+NVP
+144,f,Ekounou,53,25,07.2021,diarrhea,Yes,Same foods,Before each refill,AZT+3TC+NVP
+145,m,Ekounou,53,25,07.2021,fever,No,Same foods,Never,TDF+3TC+EFV
+146,f,Ekounou,53,25,07.2021,Fever,No,Same foods,Before each refill,AZT+3TC+EFV
+147,f,Ekounou,48,25,07.2021,Stomach    ache,Yes,Same foods,Before each refill,TDF+3TC+EFV
+150,f,Ekounou,51,25,07.2021,Malaria,No,Same foods,Before each refill,AZT+3TC+NVP
+151,m,Ekounou,53,25,07.2021,Malaria,Yes,Same foods,Never,TDF+3TC+EFV
+153,f,Ekounou,53,25,07.2021,Malaria,No,Same foods,Before each refill,AZT+3TC+NVP
+155,f,Ekounou,55,26,07.2021,skin spots,No,Same foods,Before each refill,AZT+3TC+NVP
+156,m,Ekounou,55,26,07.2021,diarrhea,No,Same foods,Never,TDF+3TC+EFV
+157,f,Ekounou,55,26,07.2021,urinary   infection,Yes,Same foods,Before each refill,AZT+3TC+NVP
+158,m,Ekounou,55,26,07.2021,Malaria,Yes,Same foods,Before each refill,AZT+3TC+NVP
+159,f,Ekounou,55,26,07.2021,Malaria,Yes,Same foods,Before each refill,TDF+3TC+EFV
+160,f,Ekounou,55,26,07.2021,Malaria,No,Same foods,Before each refill,TDF+3TC+EFV
+161,f,Ekounou,55,26,07.2021,Malaria,No,Same foods,Before each refill,Other
+170,m,Ekounou,44,27,07.2021,Fever,Yes,Same foods,Never,AZT+3TC+NVP
+171,f,Ekounou,44,27,07.2021,Flu,Yes,Same foods,At least once a day,TDF+3TC+EFV
+176,f,Ekounou,44,27,07.2021,Cough,Yes,Same foods,Never,AZT+3TC+NVP
+177,f,Ekounou,49,27,07.2021,Cough,No,Same foods,At least once a week,AZT+3TC+NVP
+181,f,Ekounou,54,28,07.2021,Cough,Yes,Same foods,Never,TDF+3TC+EFV
+182,f,Ekounou,54,28,07.2021,Cough,Yes,Same foods,Never,AZT+3TC+NVP
+183,f,Ekounou,54,28,07.2021,Cough,Yes,Same foods,At least once a day,TDF+3TC+EFV
+184,f,Ekounou,54,28,07.2021,Cough,Yes,Same foods,Never,TDF+3TC+EFV
+185,f,Ekounou,54,28,07.2021,Cough,Yes,Same foods,At least once a day,TDF+3TC+EFV
+188,f,Ekounou,49,29,07.2021,Malaria,Yes,Same foods,Never,AZT+3TC+NVP
+30,f,Kodengui,17,18,07.2021,FLU,Yes,Same foods,At least once a day,TDF+3TC+EFV
+32,f,Kodengui,17,18,07.2021,STOMACH      ACHE,Yes,Same foods,At least once a day,TDF+3TC+EFV
+36,f,Kodengui,17,18,07.2021,Cough,Yes,Same foods,At least once a day,AZT+3TC+NVP
+37,f,Kodengui,17,18,07.2021,COUGH,Yes,Same foods,At least once a day,TDF+3TC+EFV
+38,f,Kodengui,17,18,07.2021,COUGH,Yes,Same foods,At least once a day,AZT+3TC+NVP
+39,f,Kodengui,17,18,07.2021,COUGH,Yes,Same foods,At least once a day,AZT+3TC+NVP
+47,f,Kodengui,19,19,07.2021,Flu,Yes,Same foods,At least once a month,AZT+3TC+NVP
+51,f,Kodengui,19,19,07.2021,Malaria,Yes,Same foods,Before each refill,TDF+3TC+EFV
+78,m,Kodengui,19,20,07.2021,Cough,Yes,Same foods,Never,TDF+3TC+EFV
+125,f,Meyo,77,24,07.2021,Flu,Yes,Same foods,At least once a day,TDF+3TC+EFV
+137,f,Meyo,77,24,07.2021,Cough,Yes,Same foods,At least once a day,TDF+3TC+EFV
+180,m,Meyo,75,28,07.2021,Stomach  ache,Yes,Same foods,Never,AZT+3TC+NVP
+194,f,Meyo,76,31,07.2021,fever,Yes,Same foods,Never,AZT+3TC+NVP
+195,f,Meyo,78,31,07.2021,gastroenteritis,Yes,Same foods,Before each refill,AZT+3TC+EFV
+1,f,Mimboman 1,3,17,07.2021,Abscess,Yes,Same foods,Before each refill,TDF+3TC+EFV
+2,m,Mimboman 1,3,17,07.2021,Diarrhea,No,Same foods,Never,AZT+3TC+NVP
+3,m,Mimboman 1,3,17,07.2021,diarrhea,No,Same foods,Never,TDF+3TC+EFV
+5,f,Mimboman 1,6,17,07.2021,Gastroenteritis,Yes,Same foods,Before each refill,TDF+3TC+EFV
+8,f,Mimboman 1,3,17,07.2021,urinary infection,No,Same foods,Before each refill,TDF+3TC+EFV
+9,f,Mimboman 1,4,17,07.2021,URINARY INFECTION,No,Same foods,Before each refill,TDF+3TC+EFV
+11,f,Mimboman 1,6,17,07.2021,STOMACH ACHE,Yes,Same foods,At least once a day,TDF+3TC+EFV
+17,m,Mimboman 1,1,17,07.2021,Malaria,No,Same foods,At least once a week,TDF+3TC+EFV
+18,f,Mimboman 1,6,17,07.2021,Malaria,Yes,Same foods,At least once a day,AZT+3TC+NVP
+20,f,Mimboman 1,3,17,07.2021,Teething,Yes,Same foods,Before each refill,AZT+3TC+NVP
+21,f,Mimboman 1,5,17,07.2021,Skin problem,Yes,Same foods,Never,TDF+3TC+EFV
+22,m,Mimboman 1,4,17,07.2021,Cough,No,Same foods,Before each refill,TDF+3TC+EFV
+24,f,Mimboman 1,4,17,07.2021,Cough,No,Same foods,Before each refill,AZT+3TC+NVP
+28,f,Mimboman 1,3,17,07.2021,Intestinal      worms,No,Same foods,Before each refill,AZT+3TC+NVP
+31,m,Mimboman 1,1,18,07.2021,Flu,Yes,Same foods,Before each refill,AZT+3TC+NVP
+34,f,Mimboman 1,2,18,07.2021,Malaria,No,Same foods,At least once a month,AZT+3TC+NVP
+40,f,Mimboman 1,4,18,07.2021,Cough,No,Same foods,At least once a week,TDF+3TC+EFV
+44,f,Mimboman 1,2,19,07.2021,Bronchitis,No,Same foods,Before each refill,AZT+3TC+NVP
+52,m,Mimboman 1,2,19,07.2021,Malaria,No,Same foods,Before each refill,AZT+3TC+NVP
+29,f,Mimboman 13,9,18,07.2021,fever,Yes,Same foods,Before each refill,D4T+3TC+NVP
+13,f,Mimboman 2,7,17,07.2021,Malaria,Yes,Same foods,At least once a week,TDF+3TC+EFV
+14,f,Mimboman 2,7,17,07.2021,Malaria,Yes,Same foods,At least once a week,TDF+3TC+EFV
+19,m,Mimboman 2,7,17,07.2021,Malaria,Yes,Same foods,At least once a day,AZT+3TC+NVP
+25,f,Mimboman 2,9,17,07.2021,Cough,Yes,Same foods,Never,D4T+3TC+NVP
+26,m,Mimboman 2,9,17,07.2021,Cough,Yes,Same foods,At least once a week,AZT+3TC+NVP
+50,m,Mimboman 2,10,19,07.2021,Malaria,No,Same foods,At least once a week,TDF+3TC+EFV
+53,m,Mimboman 2,11,19,07.2021,Malaria,Yes,Same foods,Before each refill,AZT+3TC+NVP
+56,f,Mimboman 2,13,19,07.2021,Cough,No,Same foods,Before each refill,TDF+3TC+EFV
+64,f,Mimboman 2,15,20,07.2021,Fever,Yes,Same foods,Before each refill,TDF+3TC+EFV
+72,m,Mimboman 2,11,20,07.2021,Stomach ache,Yes,Same foods,Before each refill,TDF+3TC+EFV
+73,m,Mimboman 2,15,20,07.2021,Stomach ache,Yes,Same foods,Before each refill,AZT+3TC+NVP
+75,f,Mimboman 2,13,20,07.2021,Malaria,No,Same foods,Before each refill,AZT+3TC+NVP
+79,f,Mimboman 2,13,20,07.2021,Cough,No,Same foods,Before each refill,AZT+3TC+EFV
+84,m,Mimboman 2,13,20,07.2021,Chickenpox,Yes,Same foods,Before each refill,AZT+3TC+NVP
+12,f,Mimboman 3,7,17,07.2021,Malaria,Yes,Same foods,At least once a day,AZT+3TC+NVP
+7,f,Mimboman 4,7,17,07.2021,Flu,Yes,Same foods,At least once a day,AZT+3TC+NVP
+16,m,Mimboman 6,7,17,07.2021,Malaria,Yes,Same foods,At least once a day,AZT+3TC+NVP
+41,f,Nkoldongo 1,27,19,07.2021,skin spots,Yes,Same foods,At least once a day,TDF+3TC+EFV
+45,f,Nkoldongo 1,27,19,07.2021,diarrhea,Yes,Same foods,At least once a day,TDF+3TC+EFV
+48,f,Nkoldongo 1,27,19,07.2021,Flu,Yes,Same foods,At least once a day,AZT+3TC+NVP
+49,f,Nkoldongo 1,27,19,07.2021,Flu,Yes,Same foods,At least once a day,AZT+3TC+NVP
+57,m,Nkoldongo 1,27,19,07.2021,COUGH,Yes,Same foods,At least once a day,AZT+3TC+NVP
+58,m,Nkoldongo 1,27,19,07.2021,Cough,Yes,Same foods,At least once a day,AZT+3TC+NVP
+59,f,Nkoldongo 1,27,19,07.2021,COUGH,Yes,Same foods,At least once a day,TDF+3TC+EFV
+60,f,Nkoldongo 1,27,19,07.2021,Cough,Yes,Same foods,At least once a day,TDF+3TC+EFV
+92,m,Nkoldongo 1,29,21,07.2021,stomach ache,No,Same foods,Never,TDF+3TC+EFV
+115,m,Nkoldongo 1,30,23,07.2021,Malaria,Yes,Same foods,Before each refill,AZT+3TC+NVP
+62,m,Nkoldongo 2,21,20,07.2021,diarrhea,Yes,Same foods,Before each refill,AZT+3TC+EFV
+63,m,Nkoldongo 2,21,20,07.2021,diarrhea,Yes,Same foods,Before each refill,AZT+3TC+NVP
+90,f,Nkoldongo 2,25,21,07.2021,Flu,Yes,Same foods,Before each refill,AZT+3TC+NVP
+93,f,Nkoldongo 2,25,21,07.2021,Stomach        ache,Yes,Same foods,Before each refill,TDF+3TC+EFV
+97,f,Nkoldongo 2,24,21,07.2021,COUGH,No,Same foods,Never,TDF+3TC+EFV
+102,m,Nkoldongo 2,21,22,07.2021,diarrhea,Yes,Same foods,Before each refill,TDF+3TC+EFV
+105,f,Nkoldongo 2,23,22,07.2021,Malaria,No,Same foods,Before each refill,TDF+3TC+EFV
+65,f,Nkomo,37,20,07.2021,Flu,Yes,Same foods,At least once a day,TDF+3TC+EFV
+66,f,Nkomo,37,20,07.2021,Flu,Yes,Same foods,At least once a day,TDF+3TC+EFV
+67,f,Nkomo,37,20,07.2021,Flu,Yes,Same foods,At least once a day,TDF+3TC+EFV
+68,f,Nkomo,37,20,07.2021,Flu,Yes,Same foods,At least once a day,TDF+3TC+EFV
+69,f,Nkomo,37,20,07.2021,Flu,Yes,Same foods,At least once a day,TDF+3TC+EFV
+70,f,Nkomo,37,20,07.2021,Flu,Yes,Same foods,At least once a day,TDF+3TC+EFV
+71,f,Nkomo,37,20,07.2021,Flu,Yes,Same foods,At least once a day,TDF+3TC+EFV
+74,f,Nkomo,37,20,07.2021,stomach ache,Yes,Same foods,At least once a day,TDF+3TC+EFV
+80,f,Nkomo,37,20,07.2021,Cough,Yes,Same foods,At least once a day,TDF+3TC+EFV
+81,f,Nkomo,37,20,07.2021,Cough,Yes,Same foods,At least once a day,AZT+3TC+NVP
+98,f,Nkomo,31,21,07.2021,COUGH,Yes,Same foods,Before each refill,AZT+3TC+EFV
+106,f,Nkomo,31,22,07.2021,Malaria,Yes,Same foods,Before each refill,AZT+3TC+EFV
+107,m,Nkomo,31,22,07.2021,Cold,Yes,Same foods,Never,TDF+3TC+EFV
+111,m,Nkomo,35,23,07.2021,fever,Yes,Same foods,Before each refill,AZT+3TC+NVP
+112,f,Nkomo,39,23,07.2021,Fracture,Yes,Same foods,At least once a day,D4T+3TC+NVP
+113,f,Nkomo,35,23,07.2021,stomach ache,No,Same foods,Before each refill,TDF+3TC+EFV
+114,m,Nkomo,35,23,07.2021,Malaria,No,Same foods,Never,TDF+3TC+EFV
+116,m,Nkomo,35,23,07.2021,Skin problem,Yes,Same foods,Before each refill,AZT+3TC+EFV
+117,m,Nkomo,35,23,07.2021,Cold,Yes,Same foods,Before each refill,AZT+3TC+NVP
+118,f,Nkomo,35,23,07.2021,Cough,Yes,Same foods,Before each refill,AZT+3TC+NVP
+119,m,Nkomo,39,23,07.2021,Cough,Yes,Same foods,Never,TDF+3TC+EFV
+120,m,Nkomo,39,23,07.2021,Cough,Yes,Same foods,Never,AZT+3TC+NVP
+121,f,Nkomo,38,24,07.2021,Abscess,Yes,Same foods,Before each refill,AZT+3TC+NVP
+122,m,Nkomo,39,24,07.2021,bronchitis,Yes,Same foods,Never,TDF+3TC+EFV
+123,f,Nkomo,36,24,07.2021,Fever,Yes,Same foods,Before each refill,TDF+3TC+EFV
+138,m,Nkomo,39,24,07.2021,Cough,No,Same foods,At least once a month,AZT+3TC+NVP
+148,f,Nkomo,32,25,07.2021,Malaria,Yes,Same foods,Before each refill,NA
+149,f,Nkomo,32,25,07.2021,Malaria,No,Same foods,Before each refill,TDF+3TC+EFV
+91,f,Odza,57,21,07.2021,Flu,Yes,Same foods,At least once a day,AZT+3TC+NVP
+99,m,Odza,57,21,07.2021,Cough,Yes,Same foods,At least once a day,AZT+3TC+NVP
+100,f,Odza,57,21,07.2021,Cough,Yes,Same foods,At least once a day,AZT+3TC+NVP
+101,f,Odza,57,21,07.2021,Cough,Yes,Same foods,At least once a day,AZT+3TC+NVP
+103,f,Odza,57,22,07.2021,Flu,Yes,Same foods,At least once a day,AZT+3TC+NVP
+104,f,Odza,67,22,07.2021,Flu,Yes,Same foods,At least once a day,AZT+3TC+EFV
+109,m,Odza,57,22,07.2021,Cough,Yes,Same foods,At least once a day,TDF+3TC+EFV
+110,f,Odza,67,22,07.2021,Cough,Yes,Same foods,At least once a day,AZT+3TC+NVP
+126,m,Odza,61,24,07.2021,Flu,No,Same foods,Before each refill,AZT+3TC+NVP
+133,m,Odza,61,24,07.2021,Malaria,Yes,Same foods,Before each refill,AZT+3TC+NVP
+139,m,Odza,61,24,07.2021,Chickenpox,Yes,Same foods,Never,AZT+3TC+EFV
+162,m,Odza,60,26,07.2021,Malaria,Yes,Same foods,Never,AZT+3TC+NVP
+167,m,Odza,59,26,07.2021,Cough,Yes,Same foods,At least once a week,TDF+3TC+EFV
+168,m,Odza,65,27,07.2021,Abscess,Yes,Same foods,Never,TDF+3TC+EFV
+169,m,Odza,65,27,07.2021,skin spots,Yes,Same foods,Before each refill,AZT+3TC+NVP
+173,f,Odza,65,27,07.2021,Flu,Yes,Same foods,Before each refill,AZT+3TC+NVP
+174,f,Odza,63,27,07.2021,Malaria,No,Same foods,Before each refill,AZT+3TC+NVP
+186,f,Odza,66,29,07.2021,fever,Yes,Same foods,Before each refill,AZT+3TC+NVP
+187,f,Odza,64,29,07.2021,Flu,Yes,Same foods,Never,TDF+3TC+EFV
+189,m,Odza,64,29,07.2021,Cough,Yes,Same foods,Never,AZT+3TC+NVP
+190,m,Odza,64,29,07.2021,Cough,Yes,Same foods,Never,AZT+3TC+NVP
+191,f,Odza,74,30,07.2021,Flu,Yes,Same foods,Never,TDF+3TC+EFV
+192,f,Odza,74,30,07.2021,Flu,Yes,Same foods,At least once a day,TDF+3TC+EFV
+193,f,Odza,74,30,07.2021,Cough,Yes,Same foods,Never,AZT+3TC+NVP
+196,f,Odza,62,31,07.2021,Malaria,No,Same foods,Before each refill,AZT+3TC+NVP
+197,f,Odza,62,31,07.2021,Malaria,Yes,Same foods,Before each refill,AZT+3TC+NVP
+199,m,Odza,69,31,07.2021,Cough,Yes,Same foods,At least once a week,AZT+3TC+NVP
