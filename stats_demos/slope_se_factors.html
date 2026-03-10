@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Measuring Slope Wobble Interactive</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <style>
+    :root {
+      --teal: #2d6f7a;
+      --teal-dark: #235861;
+      --teal-soft: #e4eff1;
+      --red: #c83b3b;
+      --gold: #e8c76a;
+      --ink: #2f3742;
+      --muted: #66707a;
+      --bg: #f5f5f3;
+      --panel: #fbfbfa;
+      --shadow: 0 10px 28px rgba(35, 48, 56, 0.08);
+      --good: #78ac8c;
+      --mid: #d5c260;
+      --bad: #d06a63;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #e7eaec;
+      color: var(--ink);
+    }
+    .slide {
+      width: 1600px;
+      min-height: 900px;
+      margin: 14px auto;
+      background: var(--bg);
+      border-top: 18px solid var(--gold);
+      border-bottom: 18px solid var(--teal);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.12);
+      padding: 24px 30px 20px;
+    }
+
+    /* ---- HEADER ---- */
+    .header {
+      margin-bottom: 14px;
+    }
+    .title {
+      font-size: 48px;
+      line-height: 1.04;
+      color: var(--teal);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin: 0 0 8px;
+    }
+    .subtitle {
+      font-size: 20px;
+      line-height: 1.38;
+      margin: 0;
+      max-width: 960px;
+    }
+    .formula-card {
+      background: #f2f3f2;
+      border: 1.5px solid #dbe0e3;
+      border-radius: 16px;
+      padding: 10px 12px;
+    }
+    .formula-title {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--teal-dark);
+    }
+    .formula-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .formula-katex {
+      font-size: 16px;
+      line-height: 1.2;
+    }
+    .formula-notes {
+      font-size: 12px;
+      line-height: 1.35;
+      color: #55616c;
+      margin-top: 6px;
+    }
+    .formula-notes b { color: var(--teal-dark); }
+
+    /* ---- MAIN LAYOUT ---- */
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr 280px;
+      gap: 16px;
+      align-items: start;
+    }
+    .panel {
+      background: var(--panel);
+      border: 2px solid rgba(45,111,122,0.35);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    /* ---- LEFT CONTROLS ---- */
+    .controls { padding: 16px 16px 14px; }
+    .controls h2 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      color: var(--teal-dark);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .control-group {
+      margin-bottom: 14px;
+      background: #f8f8f7;
+      border: 1.5px solid #dbe0e3;
+      border-radius: 16px;
+      padding: 12px 14px 10px;
+    }
+    .control-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+    .control-label { font-size: 16px; font-weight: 800; }
+    .control-value { font-size: 14px; font-weight: 800; color: var(--ink); }
+    .control-note { font-size: 13px; line-height: 1.3; color: var(--muted); margin-bottom: 6px; }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--teal);
+      cursor: pointer;
+      height: 6px;
+    }
+    .button-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    button {
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 800;
+      color: white;
+      background: var(--teal);
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(45,111,122,0.18);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    button:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(45,111,122,0.24); }
+    button:active { transform: translateY(0); }
+    button.secondary { background: #7a8893; box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+    button.red { background: var(--red); box-shadow: 0 6px 14px rgba(200,59,59,0.2); }
+    button.gold-btn { background: #c9a94e; box-shadow: 0 6px 14px rgba(200,169,78,0.2); }
+
+    .sample-counter {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .sample-counter span { color: var(--ink); font-weight: 900; font-size: 18px; }
+
+    /* ---- CENTER PLOT ---- */
+    .main-panel { padding: 14px 16px; }
+    .sim-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 6px;
+    }
+    .sim-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.1;
+      margin: 0;
+    }
+    .sim-subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.3;
+      margin-top: 3px;
+    }
+    .wobble-card {
+      min-width: 210px;
+      background: var(--teal-soft);
+      border: 1.5px solid rgba(45,111,122,0.3);
+      border-radius: 16px;
+      padding: 10px 14px;
+    }
+    .wobble-label { font-size: 14px; font-weight: 800; margin-bottom: 6px; }
+    .bar {
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--good) 0%, var(--mid) 50%, var(--bad) 100%);
+      position: relative;
+    }
+    .needle {
+      position: absolute;
+      top: -4px;
+      width: 4px;
+      height: 22px;
+      background: #20262c;
+      border-radius: 3px;
+      transform: translateX(-50%);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.7);
+      transition: left 0.3s ease;
+    }
+    .scale {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .viz-shell {
+      background: #f8f8f7;
+      border: 1.5px solid #d8dde1;
+      border-radius: 16px;
+      padding: 6px;
+      margin-top: 8px;
+    }
+    .legend-row {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-top: 6px;
+      padding-left: 4px;
+    }
+    .legend-chip { display: inline-flex; align-items: center; gap: 6px; }
+    .swatch { width: 18px; height: 4px; border-radius: 999px; }
+    .swatch.sw-red { background: var(--red); }
+    .swatch.sw-ghost { background: rgba(45,111,122,0.33); }
+    .swatch.sw-true { background: rgba(45,111,122,0.7); height: 2px; border-top: 2px dashed rgba(45,111,122,0.7); }
+    .swatch.sw-point { width: 10px; height: 10px; border-radius: 999px; background: var(--teal); }
+    .swatch.sw-pop { width: 10px; height: 10px; border-radius: 999px; background: rgba(45,111,122,0.22); }
+
+    svg { width: 100%; height: auto; display: block; }
+
+    /* ---- RIGHT PANEL ---- */
+    .right-panel { padding: 16px 16px 14px; }
+    .right-panel h2 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      color: var(--teal-dark);
+      line-height: 1.05;
+    }
+    .summary-box {
+      background: #f7f8f8;
+      border: 1.5px solid #dbe0e3;
+      border-radius: 16px;
+      padding: 12px 14px 10px;
+      margin-bottom: 12px;
+    }
+    .summary-box h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      color: var(--teal-dark);
+    }
+    .summary-box p, .summary-box li {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.34;
+    }
+    .summary-box ul { margin: 6px 0 0 16px; padding: 0; }
+    .summary-box li { margin-bottom: 4px; }
+    .big-number {
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1;
+      margin: 2px 0 4px;
+    }
+    .big-number.se-blue {
+      color: #2a6cb8;
+    }
+    .big-number.sd-subtle {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .tiny { font-size: 12px; color: var(--muted); line-height: 1.3; }
+    .strong-bold { font-weight: 900; }
+    .strong-teal { color: var(--teal-dark); font-weight: 900; }
+
+    /* ---- POPULATION CONTROLS ---- */
+    .pop-controls-bar {
+      margin-top: 14px;
+      background: var(--panel);
+      border: 2px solid rgba(45,111,122,0.2);
+      border-radius: 18px;
+      padding: 12px 20px;
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .pop-controls-bar .pop-label {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--teal-dark);
+      white-space: nowrap;
+    }
+    .pop-dial {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .pop-dial input[type="range"] { width: 120px; }
+    .pop-dial .pop-val { min-width: 50px; text-align: right; color: var(--ink); font-weight: 800; }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="header">
+      <div class="title">What Makes the Slope Less Wobbly?</div>
+      <p class="subtitle">
+        Move the dials and click <span class="strong-bold">Draw New Sample</span> repeatedly. Watch how the slope bounces around.
+        The standard error of the slope captures <span class="strong-bold">how much the slope changes across repeated samples</span>.
+      </p>
+    </div>
+
+    <div class="layout">
+      <!-- LEFT PANEL -->
+      <aside class="panel controls">
+        <h2>Simulation Dials</h2>
+        <div class="control-group">
+          <div class="control-top">
+            <div class="control-label">Fit around the line</div>
+            <div class="control-value" id="noiseValue">Tighter</div>
+          </div>
+          <div class="control-note">Lower noise = points hug the line. This changes the population itself.</div>
+          <input id="noiseSlider" type="range" min="5" max="55" value="20" />
+        </div>
+        <div class="control-group">
+          <div class="control-top">
+            <div class="control-label">Range of x values</div>
+            <div class="control-value" id="rangeValue">Wide</div>
+          </div>
+          <div class="control-note">Narrow x makes many different slopes look plausible.</div>
+          <input id="rangeSlider" type="range" min="15" max="95" value="78" />
+        </div>
+        <div class="control-group">
+          <div class="control-top">
+            <div class="control-label">Sample size</div>
+            <div class="control-value" id="nValue">12 points</div>
+          </div>
+          <div class="control-note">Small samples let a few points tug the line around.</div>
+          <input id="nSlider" type="range" min="4" max="40" value="12" />
+        </div>
+        <div class="button-row">
+          <button id="rerollBtn">Draw New Sample</button>
+          <button class="red" id="clearBtn">Clear History</button>
+        </div>
+        <div class="button-row">
+          <button class="secondary" id="toggleBtn">Hide Population</button>
+          <button class="gold-btn" id="resetBtn">Teaching Defaults</button>
+        </div>
+        <div class="sample-counter">
+          Samples drawn: <span id="sampleCount">0</span>
+        </div>
+      </aside>
+
+      <!-- CENTER PLOT -->
+      <main class="panel main-panel">
+        <div class="sim-header">
+          <div>
+            <div class="sim-title">Build Up the Sampling Distribution</div>
+            <div class="sim-subtitle">Each click draws one new sample. Previous slopes fade to ghosts.</div>
+          </div>
+          <div class="wobble-card">
+            <div class="wobble-label">Estimated Slope Wobble (SE)</div>
+            <div class="bar"><div class="needle" id="wobbleNeedle" style="left: 50%;"></div></div>
+            <div class="scale"><span>Small</span><span>Medium</span><span>Large</span></div>
+          </div>
+        </div>
+        <div class="viz-shell">
+          <svg id="simSvg" viewBox="0 0 860 520" aria-label="interactive slope standard error simulation"></svg>
+        </div>
+        <div class="legend-row">
+          <span class="legend-chip"><span class="swatch sw-point"></span> current sample</span>
+          <span class="legend-chip"><span class="swatch sw-red"></span> current best-fit line</span>
+          <span class="legend-chip"><span class="swatch sw-ghost"></span> previous sample slopes</span>
+          <span class="legend-chip"><span class="swatch sw-true"></span> true population slope</span>
+          <span class="legend-chip"><span class="swatch sw-pop"></span> population</span>
+        </div>
+      </main>
+
+      <!-- RIGHT PANEL -->
+      <aside class="panel right-panel">
+        <h2>Read the Numbers</h2>
+        <div class="summary-box">
+          <h3>Current sample slope</h3>
+          <div class="big-number" id="slopeDisplay">--</div>
+          <div class="tiny">True population slope: <span id="trueSlopeReadout">0.072</span></div>
+        </div>
+        <div class="summary-box">
+          <h3>Estimated SE of slope</h3>
+          <div class="big-number se-blue" id="seDisplay">--</div>
+          <div class="tiny">From the formula, using this sample's residuals.</div>
+        </div>
+        <div class="summary-box">
+          <h3>Observed SD of slopes</h3>
+          <div class="big-number sd-subtle" id="sdDisplay">--</div>
+          <div class="tiny">Actual SD across <span id="sdCount">0</span> drawn samples. Should converge toward the SE above.</div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-title">The Formula</div>
+          <div class="formula-row">
+            <div class="formula-katex" id="formulaMain"></div>
+          </div>
+          <div class="formula-row" style="margin-bottom:0;">
+            <div class="formula-katex" id="formulaSe"></div>
+          </div>
+          <div class="formula-notes">
+            <b>s_e</b> (noise) pushes wobble up.
+            <b>x spread</b> pushes wobble down.
+            <b>More data</b> helps both.
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- POPULATION PARAMETERS -->
+    <div class="pop-controls-bar">
+      <div class="pop-label">Population Parameters</div>
+      <div class="pop-dial">
+        True slope:
+        <input id="trueSlopeSlider" type="range" min="0" max="15" step="1" value="7" />
+        <div class="pop-val" id="trueSlopeVal">0.070</div>
+      </div>
+      <div class="pop-dial">
+        Intercept:
+        <input id="trueIntSlider" type="range" min="5" max="40" step="1" value="12" />
+        <div class="pop-val" id="trueIntVal">1.20</div>
+      </div>
+      <div class="tiny" style="color:var(--muted);max-width:360px;">Changing these resets the history. The slope is per 10 x-units. Try extreme values to see the effect.</div>
+    </div>
+  </div>
+
+  <script>
+    // ===== RENDER KATEX =====
+    document.addEventListener('DOMContentLoaded', () => {
+      katex.render(
+        String.raw`SE_{\hat{\beta}_1} = \frac{s_e}{\sqrt{\sum_{i=1}^{n}(x_i - \bar{x})^2}}`,
+        document.getElementById('formulaMain'),
+        { displayMode: true, throwOnError: false }
+      );
+      katex.render(
+        String.raw`\text{where}\quad s_e = \sqrt{\frac{\sum(y_i - \hat{y}_i)^2}{n - 2}}`,
+        document.getElementById('formulaSe'),
+        { displayMode: true, throwOnError: false }
+      );
+    });
+
+    // ===== STATE =====
+    const state = {
+      noise: 20,
+      xRange: 78,
+      n: 12,
+      trueSlope: 0.072,   // slope per 1 x-unit (slider value / 100 scaled)
+      trueInt: 1.2,
+      showPop: true,
+      // History of drawn samples
+      history: [],         // { slope, intercept } for each drawn sample's fit line
+      currentSample: null, // { xs, ys }
+      currentFit: null,    // { slope, intercept, seSlope, ... }
+    };
+
+    // ===== PLOT CONSTANTS =====
+    const P = { left: 68, right: 780, top: 32, bottom: 460, width: 712, height: 428 };
+    const xDomain = [0, 100];
+
+    function getYDomain() {
+      const yAtMin = state.trueInt + state.trueSlope * 0;
+      const yAtMax = state.trueInt + state.trueSlope * 100;
+      const sigma = state.noise / 10;
+      const lo = Math.min(yAtMin, yAtMax) - sigma * 3.5;
+      const hi = Math.max(yAtMin, yAtMax) + sigma * 3.5;
+      const pad = (hi - lo) * 0.08;
+      // Round to nice numbers
+      const nlo = Math.floor((lo - pad) * 2) / 2;
+      const nhi = Math.ceil((hi + pad) * 2) / 2;
+      return [Math.min(nlo, -0.5), Math.max(nhi, nlo + 2)];
+    }
+
+    function xToPx(x) { return P.left + ((x - xDomain[0]) / (xDomain[1] - xDomain[0])) * P.width; }
+    function yToPx(y) {
+      const yd = getYDomain();
+      return P.bottom - ((y - yd[0]) / (yd[1] - yd[0])) * P.height;
+    }
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+    // Seeded RNG
+    function mulberry32(a) {
+      return function() {
+        let t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+      };
+    }
+
+    // Box-Muller using a provided rng
+    function randnWith(rng) {
+      let u = 0, v = 0;
+      while (u === 0) u = rng();
+      while (v === 0) v = rng();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+    }
+
+    let globalSeed = Math.floor(Math.random() * 100000);
+
+    // ===== SAMPLE GENERATION =====
+    function drawOneSample() {
+      const rng = mulberry32(globalSeed++);
+      const center = 50;
+      const half = state.xRange / 2;
+      const xs = [], ys = [];
+      const sigma = state.noise / 10;
+      for (let i = 0; i < state.n; i++) {
+        const x = center - half + rng() * state.xRange;
+        const y = state.trueInt + state.trueSlope * x + randnWith(rng) * sigma;
+        xs.push(x);
+        ys.push(y);
+      }
+      return { xs, ys };
+    }
+
+    function fitOLS(xs, ys) {
+      const n = xs.length;
+      const xbar = xs.reduce((a,b) => a+b, 0) / n;
+      const ybar = ys.reduce((a,b) => a+b, 0) / n;
+      let sxx = 0, sxy = 0;
+      for (let i = 0; i < n; i++) {
+        sxx += (xs[i] - xbar) ** 2;
+        sxy += (xs[i] - xbar) * (ys[i] - ybar);
+      }
+      const slope = sxy / (sxx || 1);
+      const intercept = ybar - slope * xbar;
+      let sse = 0;
+      for (let i = 0; i < n; i++) sse += (ys[i] - (intercept + slope * xs[i])) ** 2;
+      const seResid = Math.sqrt(sse / Math.max(1, n - 2));
+      const seSlope = seResid / Math.sqrt(sxx || 1);
+      return { slope, intercept, seSlope, seResid, sxx, xbar, ybar };
+    }
+
+    // ===== POPULATION CLOUD (cached) =====
+    let popCache = null;
+    let popCacheKey = '';
+
+    function getPopulation() {
+      const key = `${state.trueSlope}_${state.trueInt}_${state.noise}`;
+      if (popCacheKey === key && popCache) return popCache;
+      const rng = mulberry32(99917);
+      const pts = [];
+      const sigma = state.noise / 10;
+      for (let i = 0; i < 200; i++) {
+        const x = rng() * 100;
+        const y = state.trueInt + state.trueSlope * x + randnWith(rng) * sigma;
+        pts.push({ x, y });
+      }
+      popCache = pts;
+      popCacheKey = key;
+      return pts;
+    }
+
+    // ===== LINE PATH =====
+    function makeLinePath(slope, intercept) {
+      const x1 = -5, x2 = 105;
+      return `M ${xToPx(x1)} ${yToPx(intercept + slope * x1)} L ${xToPx(x2)} ${yToPx(intercept + slope * x2)}`;
+    }
+
+    // ===== LABELS =====
+    function labelNoise(v) {
+      if (v < 15) return 'Very tight';
+      if (v < 25) return 'Tighter';
+      if (v < 38) return 'Moderate';
+      return 'Noisy';
+    }
+    function labelRange(v) {
+      if (v < 30) return 'Very narrow';
+      if (v < 50) return 'Narrow';
+      if (v < 75) return 'Moderate';
+      return 'Wide';
+    }
+
+    // ===== RENDER =====
+    function render() {
+      // Update labels
+      document.getElementById('noiseValue').textContent = labelNoise(state.noise);
+      document.getElementById('rangeValue').textContent = labelRange(state.xRange);
+      document.getElementById('nValue').textContent = `${state.n} points`;
+      document.getElementById('trueSlopeReadout').textContent = state.trueSlope.toFixed(3);
+
+      const svg = document.getElementById('simSvg');
+      let html = '';
+
+      // Clip path
+      html += `<defs><clipPath id="plotClip"><rect x="${P.left}" y="${P.top}" width="${P.width}" height="${P.height}" /></clipPath></defs>`;
+
+      // Grid
+      const yd = getYDomain();
+      const ySpan = yd[1] - yd[0];
+      const yStep = ySpan <= 4 ? 0.5 : ySpan <= 8 ? 1 : ySpan <= 16 ? 2 : 5;
+      for (let y = Math.ceil(yd[0] / yStep) * yStep; y <= yd[1]; y += yStep) {
+        html += `<line stroke="#e1e5e8" stroke-width="1" stroke-dasharray="4 6" x1="${P.left}" y1="${yToPx(y)}" x2="${P.right}" y2="${yToPx(y)}" />`;
+      }
+      for (let x = 0; x <= 100; x += 20) {
+        html += `<line stroke="#e1e5e8" stroke-width="1" stroke-dasharray="4 6" x1="${xToPx(x)}" y1="${P.top}" x2="${xToPx(x)}" y2="${P.bottom}" />`;
+      }
+
+      // Axes
+      html += `<line stroke="#8a939a" stroke-width="1.8" x1="${P.left}" y1="${P.bottom}" x2="${P.right}" y2="${P.bottom}" />`;
+      html += `<line stroke="#8a939a" stroke-width="1.8" x1="${P.left}" y1="${P.top}" x2="${P.left}" y2="${P.bottom}" />`;
+
+      // Axis labels
+      for (let x = 0; x <= 100; x += 20) {
+        html += `<text font-size="12" fill="#64707a" font-weight="700" x="${xToPx(x)}" y="${P.bottom + 22}" text-anchor="middle">${x}</text>`;
+      }
+      for (let y = Math.ceil(yd[0] / yStep) * yStep; y <= yd[1]; y += yStep) {
+        const label = Number.isInteger(y) ? y.toString() : y.toFixed(1);
+        html += `<text font-size="12" fill="#64707a" font-weight="700" x="${P.left - 12}" y="${yToPx(y) + 4}" text-anchor="end">${label}</text>`;
+      }
+      html += `<text font-size="12" fill="#64707a" font-weight="700" x="${(P.left + P.right) / 2}" y="${P.bottom + 44}" text-anchor="middle">x variable</text>`;
+      html += `<text font-size="12" fill="#64707a" font-weight="700" x="18" y="${(P.top + P.bottom) / 2}" transform="rotate(-90 18 ${(P.top + P.bottom) / 2})" text-anchor="middle">y variable</text>`;
+
+      // Sampled x-range band
+      const center = 50;
+      const xMin = center - state.xRange / 2;
+      const xMax = center + state.xRange / 2;
+      html += `<rect fill="rgba(232,199,106,0.22)" stroke="rgba(200,59,59,0.5)" stroke-width="1.5" x="${xToPx(xMin)}" y="${P.top}" width="${xToPx(xMax) - xToPx(xMin)}" height="${P.bottom - P.top}" rx="8" />`;
+      html += `<text font-size="11" fill="#998750" font-weight="700" x="${xToPx(xMin) + 6}" y="${P.top + 15}">sampled x-range</text>`;
+
+      // CLIPPED GROUP for lines and points
+      html += `<g clip-path="url(#plotClip)">`;
+
+      // Population cloud
+      if (state.showPop) {
+        const pop = getPopulation();
+        for (const p of pop) {
+          html += `<circle cx="${xToPx(p.x)}" cy="${yToPx(p.y)}" r="3.2" fill="rgba(45,111,122,0.18)" />`;
+        }
+      }
+
+      // True population line
+      html += `<path d="${makeLinePath(state.trueSlope, state.trueInt)}" stroke="rgba(45,111,122,0.6)" stroke-width="2.2" stroke-dasharray="7 6" fill="none" />`;
+
+      // Ghost lines (previous samples)
+      const maxOpacity = 0.35;
+      const fadeStart = Math.max(0, state.history.length - 60);
+      for (let i = fadeStart; i < state.history.length; i++) {
+        const h = state.history[i];
+        const age = state.history.length - 1 - i;
+        const opacity = Math.max(0.06, maxOpacity * Math.pow(0.96, age));
+        html += `<path d="${makeLinePath(h.slope, h.intercept)}" stroke="rgba(45,111,122,${opacity.toFixed(3)})" stroke-width="2.2" fill="none" />`;
+      }
+
+      // Current fit line
+      if (state.currentFit) {
+        html += `<path d="${makeLinePath(state.currentFit.slope, state.currentFit.intercept)}" stroke="var(--red)" stroke-width="3.5" fill="none" />`;
+      }
+
+      // Current sample points
+      if (state.currentSample) {
+        for (let i = 0; i < state.currentSample.xs.length; i++) {
+          const cx = xToPx(state.currentSample.xs[i]);
+          const cy = yToPx(state.currentSample.ys[i]);
+          html += `<circle cx="${cx}" cy="${cy}" r="5.5" fill="var(--teal)" opacity="0.92" />`;
+          html += `<circle cx="${cx}" cy="${cy}" r="5.5" fill="none" stroke="white" stroke-width="1.5" />`;
+        }
+      }
+
+      html += `</g>`; // end clip group
+
+      svg.innerHTML = html;
+
+      // RIGHT PANEL NUMBERS
+      if (state.currentFit) {
+        document.getElementById('slopeDisplay').textContent = state.currentFit.slope.toFixed(4);
+        document.getElementById('seDisplay').textContent = state.currentFit.seSlope.toFixed(4);
+      }
+
+      // Observed SD of slopes from history
+      const allSlopes = state.history.map(h => h.slope);
+      if (state.currentFit) allSlopes.push(state.currentFit.slope);
+      if (allSlopes.length >= 2) {
+        const mean = allSlopes.reduce((a,b) => a+b, 0) / allSlopes.length;
+        const variance = allSlopes.reduce((a,s) => a + (s - mean) ** 2, 0) / (allSlopes.length - 1);
+        const sd = Math.sqrt(variance);
+        document.getElementById('sdDisplay').textContent = sd.toFixed(4);
+      } else {
+        document.getElementById('sdDisplay').textContent = '--';
+      }
+      document.getElementById('sdCount').textContent = allSlopes.length;
+      document.getElementById('sampleCount').textContent = allSlopes.length;
+
+      // Wobble needle
+      const se = state.currentFit ? state.currentFit.seSlope : 0.1;
+      const needlePct = clamp(se / 0.25 * 100, 4, 96);
+      document.getElementById('wobbleNeedle').style.left = `${needlePct}%`;
+    }
+
+    // ===== ACTIONS =====
+    function drawNewSample() {
+      // Push current fit to history
+      if (state.currentFit) {
+        state.history.push({ slope: state.currentFit.slope, intercept: state.currentFit.intercept });
+      }
+      const sample = drawOneSample();
+      state.currentSample = sample;
+      state.currentFit = fitOLS(sample.xs, sample.ys);
+      render();
+    }
+
+    function clearHistory() {
+      state.history = [];
+      state.currentSample = null;
+      state.currentFit = null;
+      document.getElementById('slopeDisplay').textContent = '--';
+      document.getElementById('seDisplay').textContent = '--';
+      document.getElementById('sdDisplay').textContent = '--';
+      render();
+    }
+
+    function resetDefaults() {
+      state.noise = 20; state.xRange = 78; state.n = 12;
+      state.trueSlope = 0.070; state.trueInt = 1.2;
+      document.getElementById('noiseSlider').value = 20;
+      document.getElementById('rangeSlider').value = 78;
+      document.getElementById('nSlider').value = 12;
+      document.getElementById('trueSlopeSlider').value = 7;
+      document.getElementById('trueIntSlider').value = 12;
+      document.getElementById('trueSlopeVal').textContent = '0.070';
+      document.getElementById('trueIntVal').textContent = '1.20';
+      clearHistory();
+    }
+
+    // ===== EVENT WIRING =====
+    document.getElementById('noiseSlider').addEventListener('input', e => {
+      state.noise = +e.target.value;
+      popCache = null; // noise changes the population
+      clearHistory();
+    });
+    document.getElementById('rangeSlider').addEventListener('input', e => {
+      state.xRange = +e.target.value;
+      clearHistory();
+    });
+    document.getElementById('nSlider').addEventListener('input', e => {
+      state.n = +e.target.value;
+      clearHistory();
+    });
+
+    document.getElementById('rerollBtn').addEventListener('click', drawNewSample);
+    document.getElementById('clearBtn').addEventListener('click', clearHistory);
+    document.getElementById('resetBtn').addEventListener('click', resetDefaults);
+
+    document.getElementById('toggleBtn').addEventListener('click', () => {
+      state.showPop = !state.showPop;
+      document.getElementById('toggleBtn').textContent = state.showPop ? 'Hide Population' : 'Show Population';
+      render();
+    });
+
+    // Population parameter sliders
+    document.getElementById('trueSlopeSlider').addEventListener('input', e => {
+      state.trueSlope = +e.target.value / 100;
+      document.getElementById('trueSlopeVal').textContent = state.trueSlope.toFixed(3);
+      popCache = null;
+      clearHistory();
+    });
+    document.getElementById('trueIntSlider').addEventListener('input', e => {
+      state.trueInt = +e.target.value / 10;
+      document.getElementById('trueIntVal').textContent = state.trueInt.toFixed(2);
+      popCache = null;
+      clearHistory();
+    });
+
+    // Keyboard shortcut: spacebar draws new sample
+    document.addEventListener('keydown', e => {
+      if (e.code === 'Space' && e.target === document.body) {
+        e.preventDefault();
+        drawNewSample();
+      }
+    });
+
+    // ===== INIT =====
+    render();
+  </script>
+</body>
+</html>
