@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistical Methods in Public Health Literature</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #007A7C;
+    --teal-dark: #005F60;
+    --teal-light: #00A29F;
+    --teal-muted: #E0F2F1;
+    --coral: #F26C4F;
+    --gold: #F5A623;
+    --navy: #1B2A3D;
+    --slate: #4A5568;
+    --gray-100: #F7FAFC;
+    --gray-200: #EDF2F7;
+    --gray-300: #E2E8F0;
+    --gray-600: #718096;
+    --white: #FFFFFF;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'Source Sans Pro', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    color: var(--navy);
+    background: var(--white);
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header {
+    padding: 3rem 2rem 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--teal-muted);
+    color: var(--teal-dark);
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    line-height: 1.2;
+    color: var(--navy);
+    margin-bottom: 0.7rem;
+  }
+  .header h1 span { color: var(--teal); }
+  .header .sub {
+    font-size: 0.95rem;
+    color: var(--slate);
+    max-width: 680px;
+    margin: 0 auto 0.6rem;
+    font-weight: 300;
+  }
+  .header .meta {
+    font-size: 0.82rem;
+    color: var(--gray-600);
+  }
+  .header .meta a {
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .header .meta a:hover { text-decoration: underline; }
+
+  .table-wrap {
+    max-width: 780px;
+    margin: 1.5rem auto 3rem;
+    padding: 0 1rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    table-layout: fixed;
+  }
+
+  col.col-method { width: auto; }
+  col.col-n { width: 62px; }
+  col.col-pct { width: 72px; }
+  col.col-bar { width: 160px; }
+
+  thead th {
+    background: var(--teal);
+    color: var(--white);
+    padding: 0.65rem 0.8rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  thead th:first-child { border-radius: 8px 0 0 0; }
+  thead th:last-child { border-radius: 0 8px 0 0; }
+  thead th.r { text-align: right; }
+
+  tr.cat td {
+    background: var(--gray-100);
+    font-weight: 700;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--teal-dark);
+    padding: 0.6rem 0.8rem 0.45rem;
+    border-top: 2px solid var(--gray-300);
+  }
+  tbody tr:first-child.cat td { border-top: none; }
+
+  tr.item td {
+    padding: 0.4rem 0.8rem;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: middle;
+  }
+  tr.item:hover td { background: var(--teal-muted); }
+
+  td.method-name {
+    padding-left: 1.6rem !important;
+    color: var(--navy);
+  }
+  td.r {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--slate);
+  }
+  td.pct {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .bar-cell { padding-right: 1rem !important; }
+  .bar-track {
+    height: 14px;
+    background: var(--gray-200);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--teal);
+    transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  tr[data-cat="inference"] .bar-fill { background: var(--coral); }
+  tr[data-cat="epi"] .bar-fill { background: var(--teal-light); }
+  tr[data-cat="tests"] .bar-fill { background: var(--gold); }
+  tr[data-cat="modeling-ind"] .bar-fill { background: var(--teal); }
+  tr[data-cat="modeling-dep"] .bar-fill { background: #6B8F9E; }
+  tr[data-cat="modeling-complex"] .bar-fill { background: #9B8EC4; }
+  tr[data-cat="missing"] .bar-fill { background: var(--coral); }
+  tr[data-cat="software"] .bar-fill { background: var(--teal-dark); }
+  tr[data-cat="design"] .bar-fill { background: var(--teal); }
+  tr[data-cat="summary"] .bar-fill { background: var(--teal); }
+
+  .footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: var(--navy);
+    color: rgba(255,255,255,0.55);
+    font-size: 0.82rem;
+  }
+  .footer a { color: var(--teal-light); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+  /* ---- FILTER SECTION ---- */
+  .filter-section {
+    max-width: 780px;
+    margin: 0 auto 2.5rem;
+    padding: 0 1rem;
+  }
+  .filter-card {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-300);
+    border-radius: 12px;
+    padding: 2rem 2.2rem;
+  }
+  .filter-card h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+  .filter-card .filter-desc {
+    font-size: 0.9rem;
+    color: var(--slate);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  .slider-row label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--slate);
+    white-space: nowrap;
+  }
+  .slider-row input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: var(--gray-300);
+    border-radius: 3px;
+    outline: none;
+  }
+  .slider-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--teal);
+    cursor: pointer;
+    border: 3px solid var(--white);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .slider-row input[type="range"]::-moz-range-thumb {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--teal);
+    cursor: pointer;
+    border: 3px solid var(--white);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .threshold-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    background: var(--teal);
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+  .filter-result {
+    margin-top: 1.3rem;
+    font-size: 0.88rem;
+    color: var(--slate);
+  }
+  .filter-result strong {
+    color: var(--teal-dark);
+    font-size: 1.05rem;
+  }
+
+  tr.item.hidden-row { display: none; }
+  tr.cat.hidden-cat { display: none; }
+
+  @media (max-width: 600px) {
+    col.col-bar { width: 90px; }
+    col.col-n { width: 44px; }
+    col.col-pct { width: 56px; }
+    td.method-name { padding-left: 1rem !important; font-size: 0.84rem; }
+    table { font-size: 0.82rem; }
+    .slider-row { flex-wrap: wrap; gap: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">Study Visualization</div>
+  <h1>Statistical Methods in the <span>Public Health Literature</span></h1>
+  <p class="sub">Review of 216 randomly sampled articles from 7 top-tier public health journals (2013 publication year). Each row shows the percentage of articles that reported a given method.</p>
+  <p class="meta">Hayat MJ, Powell A, Johnson T, Cadwell BL (2017) &middot; <a href="https://doi.org/10.1371/journal.pone.0179032" target="_blank">PLoS ONE 12(6): e0179032</a></p>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <colgroup>
+      <col class="col-method">
+      <col class="col-n">
+      <col class="col-pct">
+      <col class="col-bar">
+    </colgroup>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th class="r">n</th>
+        <th class="r">%</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr class="cat"><td colspan="4">Study Design</td></tr>
+      <tr class="item" data-cat="design"><td class="method-name">Observational</td><td class="r">177</td><td class="pct">81.9</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="81.9"></div></div></td></tr>
+      <tr class="item" data-cat="design"><td class="method-name">Systematic Review / Meta-Analysis</td><td class="r">17</td><td class="pct">7.9</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="7.9"></div></div></td></tr>
+      <tr class="item" data-cat="design"><td class="method-name">Experimental</td><td class="r">12</td><td class="pct">5.6</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="5.6"></div></div></td></tr>
+      <tr class="item" data-cat="design"><td class="method-name">Other</td><td class="r">10</td><td class="pct">4.6</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="4.6"></div></div></td></tr>
+
+      <tr class="cat"><td colspan="4">Summary Statistics</td></tr>
+      <tr class="item" data-cat="summary"><td class="method-name">Tables</td><td class="r">206</td><td class="pct">95.4</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="95.4"></div></div></td></tr>
+      <tr class="item" data-cat="summary"><td class="method-name">Descriptive Statistics</td><td class="r">198</td><td class="pct">91.7</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="91.7"></div></div></td></tr>
+      <tr class="item" data-cat="summary"><td class="method-name">Charts / Figures / Graphs</td><td class="r">133</td><td class="pct">61.6</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="61.6"></div></div></td></tr>
+
+      <tr class="cat"><td colspan="4">Statistical Inference</td></tr>
+      <tr class="item" data-cat="inference"><td class="method-name">Confidence Intervals</td><td class="r">165</td><td class="pct">76.4</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="76.4"></div></div></td></tr>
+      <tr class="item" data-cat="inference"><td class="method-name">p-values</td><td class="r">156</td><td class="pct">72.2</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="72.2"></div></div></td></tr>
+      <tr class="item" data-cat="inference"><td class="method-name">*, **, *** p-value reporting</td><td class="r">39</td><td class="pct">18.1</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="18.1"></div></div></td></tr>
+      <tr class="item" data-cat="inference"><td class="method-name">Multiple Testing Adjustment</td><td class="r">11</td><td class="pct">5.1</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="5.1"></div></div></td></tr>
+
+      <tr class="cat"><td colspan="4">Epidemiological Statistics</td></tr>
+      <tr class="item" data-cat="epi"><td class="method-name">Odds Ratio</td><td class="r">88</td><td class="pct">40.7</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="40.7"></div></div></td></tr>
+      <tr class="item" data-cat="epi"><td class="method-name">Prevalence</td><td class="r">37</td><td class="pct">17.1</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="17.1"></div></div></td></tr>
+      <tr class="item" data-cat="epi"><td class="method-name">Hazard Ratio</td><td class="r">32</td><td class="pct">14.8</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="14.8"></div></div></td></tr>
+      <tr class="item" data-cat="epi"><td class="method-name">Relative Risk</td><td class="r">27</td><td class="pct">12.5</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="12.5"></div></div></td></tr>
+      <tr class="item" data-cat="epi"><td class="method-name">Mortality</td><td class="r">25</td><td class="pct">11.6</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="11.6"></div></div></td></tr>
+      <tr class="item" data-cat="epi"><td class="method-name">Incidence</td><td class="r">19</td><td class="pct">8.8</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="8.8"></div></div></td></tr>
+
+      <tr class="cat"><td colspan="4">Statistical Tests</td></tr>
+      <tr class="item" data-cat="tests"><td class="method-name">Pearson's Chi-square / Fisher's Exact</td><td class="r">56</td><td class="pct">25.9</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="25.9"></div></div></td></tr>
+      <tr class="item" data-cat="tests"><td class="method-name">Correlation</td><td class="r">34</td><td class="pct">15.7</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="15.7"></div></div></td></tr>
+      <tr class="item" data-cat="tests"><td class="method-name">t-test</td><td class="r">28</td><td class="pct">13.0</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="13.0"></div></div></td></tr>
+      <tr class="item" data-cat="tests"><td class="method-name">Nonparametric (any)</td><td class="r">17</td><td class="pct">7.9</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="7.9"></div></div></td></tr>
+      <tr class="item" data-cat="tests"><td class="method-name">Kaplan-Meier</td><td class="r">5</td><td class="pct">2.3</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="2.3"></div></div></td></tr>
+      <tr class="item" data-cat="tests"><td class="method-name">Log-rank</td><td class="r">2</td><td class="pct">1.0</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="1.0"></div></div></td></tr>
+
+      <tr class="cat"><td colspan="4">Modeling: Independent</td></tr>
+      <tr class="item" data-cat="modeling-ind"><td class="method-name">Logistic Regression</td><td class="r">83</td><td class="pct">38.4</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="38.4"></div></div></td></tr>
+      <tr class="item" data-cat="modeling-ind"><td class="method-name">Linear Regression</td><td class="r">42</td><td class="pct">19.4</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="19.4"></div></div></td></tr>
+      <tr class="item" data-cat="modeling-ind"><td class="method-name">Cox Proportional Hazards</td><td class="r">33</td><td class="pct">15.3</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="15.3"></div></div></td></tr>
+      <tr class="item" data-cat="modeling-ind"><td class="method-name">ANOVA</td><td class="r">21</td><td class="pct">9.7</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="9.7"></div></div></td></tr>
+      <tr class="item" data-cat="modeling-ind"><td class="method-name">Poisson Regression</td><td class="r">16</td><td class="pct">7.4</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="7.4"></div></div></td></tr>
+      <tr class="item" data-cat="modeling-ind"><td class="method-name">Nonlinear Regression</td><td class="r">1</td><td class="pct">&lt;1</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="0.5"></div></div></td></tr>
+
+      <tr class="cat"><td colspan="4">Modeling: Dependent Data</td></tr>
+      <tr class="item" data-cat="modeling-dep"><td class="method-name">Generalized Linear Mixed Model</td><td class="r">22</td><td class="pct">10.2</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="10.2"></div></div></td></tr>
+      <tr class="item" data-cat="modeling-dep"><td class="method-name">Marginal Models (GEE)</td><td class="r">16</td><td class="pct">7.4</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="7.4"></div></div></td></tr>
+      <tr class="item" data-cat="modeling-dep"><td class="method-name">General Linear Mixed Model</td><td class="r">15</td><td class="pct">6.9</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="6.9"></div></div></td></tr>
+
+      <tr class="cat"><td colspan="4">Modeling: Complex Techniques</td></tr>
+      <tr class="item" data-cat="modeling-complex"><td class="method-name">PCA / Factor Analysis</td><td class="r">9</td><td class="pct">4.2</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="4.2"></div></div></td></tr>
+      <tr class="item" data-cat="modeling-complex"><td class="method-name">Latent Class Model</td><td class="r">3</td><td class="pct">1.4</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="1.4"></div></div></td></tr>
+      <tr class="item" data-cat="modeling-complex"><td class="method-name">Structural Equation Modeling</td><td class="r">2</td><td class="pct">1.0</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="1.0"></div></div></td></tr>
+      <tr class="item" data-cat="modeling-complex"><td class="method-name">Mixture Model</td><td class="r">1</td><td class="pct">&lt;1</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="0.5"></div></div></td></tr>
+
+      <tr class="cat"><td colspan="4">Missing Data Handling</td></tr>
+      <tr class="item" data-cat="missing"><td class="method-name">Casewise Deletion</td><td class="r">66</td><td class="pct">30.6</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="30.6"></div></div></td></tr>
+      <tr class="item" data-cat="missing"><td class="method-name">Multiple Imputation</td><td class="r">12</td><td class="pct">5.6</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="5.6"></div></div></td></tr>
+      <tr class="item" data-cat="missing"><td class="method-name">Mean (Single) Imputation</td><td class="r">10</td><td class="pct">4.6</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="4.6"></div></div></td></tr>
+
+      <tr class="cat"><td colspan="4">Statistical Software</td></tr>
+      <tr class="item" data-cat="software"><td class="method-name">SAS</td><td class="r">75</td><td class="pct">34.7</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="34.7"></div></div></td></tr>
+      <tr class="item" data-cat="software"><td class="method-name">Stata</td><td class="r">54</td><td class="pct">25.0</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="25.0"></div></div></td></tr>
+      <tr class="item" data-cat="software"><td class="method-name">R</td><td class="r">18</td><td class="pct">8.3</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="8.3"></div></div></td></tr>
+      <tr class="item" data-cat="software"><td class="method-name">SPSS</td><td class="r">18</td><td class="pct">8.3</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="8.3"></div></div></td></tr>
+      <tr class="item" data-cat="software"><td class="method-name">SUDAAN</td><td class="r">9</td><td class="pct">4.2</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="4.2"></div></div></td></tr>
+      <tr class="item" data-cat="software"><td class="method-name">Other</td><td class="r">32</td><td class="pct">14.8</td><td class="bar-cell"><div class="bar-track"><div class="bar-fill" data-pct="14.8"></div></div></td></tr>
+
+    </tbody>
+  </table>
+</div>
+
+<div class="filter-section">
+  <div class="filter-card">
+    <h2>Filter by Prevalence</h2>
+    <p class="filter-desc">Show only topics that appeared in more than a given percentage of articles. Drag the slider or type a value.</p>
+    <div class="slider-row">
+      <label for="thresholdSlider">Minimum %</label>
+      <input type="range" id="thresholdSlider" min="0" max="95" step="1" value="0">
+      <span class="threshold-badge" id="thresholdBadge">&gt;0%</span>
+    </div>
+    <p class="filter-result" id="filterResult">Showing <strong>46</strong> of 46 methods across <strong>10</strong> categories</p>
+  </div>
+</div>
+
+<footer class="footer">
+  <strong>The GRAPH Courses</strong> &middot;
+  Hayat MJ et al. (2017) <a href="https://doi.org/10.1371/journal.pone.0179032" target="_blank">PLoS ONE 12(6): e0179032</a> &middot; CC0 Public Domain
+</footer>
+
+<script>
+  // Animate bars on load
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.bar-fill').forEach(bar => {
+      bar.style.width = bar.dataset.pct + '%';
+    });
+  });
+
+  // Filter logic
+  const slider = document.getElementById('thresholdSlider');
+  const badge  = document.getElementById('thresholdBadge');
+  const result = document.getElementById('filterResult');
+
+  function getPct(itemRow) {
+    const fill = itemRow.querySelector('.bar-fill');
+    return fill ? parseFloat(fill.dataset.pct) : 0;
+  }
+
+  function applyFilter(threshold) {
+    badge.textContent = '>' + threshold + '%';
+
+    const items = document.querySelectorAll('tr.item');
+    const cats  = document.querySelectorAll('tr.cat');
+
+    // Build a map: for each cat row, track whether any of its items pass
+    // Cat rows and item rows are interleaved; items belong to the preceding cat
+    let currentCat = null;
+    const catHasVisible = new Map();
+
+    // First pass: show/hide items
+    let visibleCount = 0;
+    const rows = document.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+      if (row.classList.contains('cat')) {
+        currentCat = row;
+        catHasVisible.set(currentCat, false);
+      } else if (row.classList.contains('item')) {
+        const pct = getPct(row);
+        if (pct > threshold) {
+          row.classList.remove('hidden-row');
+          visibleCount++;
+          if (currentCat) catHasVisible.set(currentCat, true);
+        } else {
+          row.classList.add('hidden-row');
+        }
+      }
+    });
+
+    // Second pass: show/hide category headers
+    let visibleCats = 0;
+    catHasVisible.forEach((hasVisible, catRow) => {
+      if (hasVisible) {
+        catRow.classList.remove('hidden-cat');
+        visibleCats++;
+      } else {
+        catRow.classList.add('hidden-cat');
+      }
+    });
+
+    const totalItems = items.length;
+    result.innerHTML = 'Showing <strong>' + visibleCount + '</strong> of ' + totalItems + ' methods across <strong>' + visibleCats + '</strong> categories';
+  }
+
+  slider.addEventListener('input', () => applyFilter(parseInt(slider.value)));
+
+  // Apply default filter on load
+  applyFilter(0);
+</script>
+
+</body>
+</html>
