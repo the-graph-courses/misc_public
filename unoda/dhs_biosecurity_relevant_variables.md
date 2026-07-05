@@ -186,10 +186,3 @@ Students can still use those as explanatory variables.
 | Child | `H64` | Hib 1 |
 | Child | `H65` | Hib 2 |
 | Child | `H66` | Hib 3 |
-
-
-- `V480` — Safe injection practice
-- `V781` — Ever tested for HIV
-- `V828` — Received HIV test results
-- `V763A` — STI in last 12 months
-- `V770` — Sought treatment for STI
