@@ -136,7 +136,7 @@
 </div>
 
 <div class="top-row">
-  <span class="q-counter" id="qCounter">Question 1 of 9</span>
+  <span class="q-counter" id="qCounter">Question 1 of 7</span>
   <button class="btn-summary" id="summaryBtn">Quiz Summary</button>
 </div>
 
@@ -222,16 +222,16 @@
 </div>
 
 <!-- QUESTION 5 -->
-<div class="question-card" data-answer="b">
-  <p class="q-text">When a conversation exceeds the context window and the model loses earlier messages, the model will typically:</p>
+<div class="question-card" data-answer="c">
+  <p class="q-text">When a conversation grows longer than the model's context window, which of the following is LEAST likely to happen?</p>
   <div class="options">
-    <label data-option="a"><input type="radio" value="a"><span>Warn you that it has lost earlier context and may not answer accurately</span></label>
-    <label data-option="b"><input type="radio" value="b"><span>Keep responding without warning, potentially hallucinating to fill gaps</span></label>
-    <label data-option="c"><input type="radio" value="c"><span>Stop responding entirely until you start a new conversation</span></label>
+    <label data-option="a"><input type="radio" value="a"><span>Compaction: the app summarizes older parts of the conversation to free up space</span></label>
+    <label data-option="b"><input type="radio" value="b"><span>Earlier messages are dropped and the model loses that context without warning you</span></label>
+    <label data-option="c"><input type="radio" value="c"><span>The model upgrades itself to a version with a larger context window</span></label>
   </div>
   <div class="feedback">
     <div class="feedback-banner"></div>
-    <div class="feedback-explanation">Models don't know what they've lost. They will try to continue coherently with whatever context remains, which can lead to fabricated information. They won't warn you.</div>
+    <div class="feedback-explanation">A model's context window size is fixed by how it was built and deployed, so it cannot upgrade itself mid-conversation. What actually happens depends on the app: some compact the conversation by summarizing older messages, while others silently drop the oldest messages. Either way, details can get lost, and the model usually won't tell you.</div>
   </div>
 </div>
 
@@ -251,7 +251,7 @@
 
 <!-- QUESTION 7 -->
 <div class="question-card" data-answer="b">
-  <p class="q-text">In a basic RAG system, the data you want the model to reference needs to be:</p>
+  <p class="q-text">In a basic RAG system, the data you want the model to reference typically needs to be:</p>
   <div class="options">
     <label data-option="a"><input type="radio" value="a"><span>Added to the model's training data through a fine-tuning process that permanently changes the model</span></label>
     <label data-option="b"><input type="radio" value="b"><span>Split into chunks and stored in a searchable database</span></label>
@@ -260,34 +260,6 @@
   <div class="feedback">
     <div class="feedback-banner"></div>
     <div class="feedback-explanation">RAG splits documents into chunks, stores them in a searchable database (often a vector store), and retrieves the most relevant chunks at query time. The model stays unchanged throughout. ("Gradient re-normalization" is a made-up term.)</div>
-  </div>
-</div>
-
-<!-- QUESTION 8 -->
-<div class="question-card" data-answer="a">
-  <p class="q-text">A colleague suggests fine-tuning the LLM on your company's documents instead of using RAG. What is the main drawback of that approach?</p>
-  <div class="options">
-    <label data-option="a"><input type="radio" value="a"><span>Fine-tuning is expensive, and the model must be retrained every time a document changes</span></label>
-    <label data-option="b"><input type="radio" value="b"><span>Fine-tuning erases everything the model previously knew, so it can only answer questions about your documents</span></label>
-    <label data-option="c"><input type="radio" value="c"><span>Fine-tuning only works for image models, not for text-based LLMs</span></label>
-  </div>
-  <div class="feedback">
-    <div class="feedback-banner"></div>
-    <div class="feedback-explanation">Fine-tuning is costly and creates a static snapshot. If your documents change (as policies often do), you'd need to retrain. RAG avoids this by keeping documents in an external database that can be updated at any time, without touching the model.</div>
-  </div>
-</div>
-
-<!-- QUESTION 9 -->
-<div class="question-card" data-answer="b">
-  <p class="q-text">In a RAG system, something needs to find the right document chunks for each question. One approach uses AI to understand the meaning of your query. What is another valid approach?</p>
-  <div class="options">
-    <label data-option="a"><input type="radio" value="a"><span>Recursive token backpropagation across the document index</span></label>
-    <label data-option="b"><input type="radio" value="b"><span>Keyword matching, which finds chunks that contain the same words as the query</span></label>
-    <label data-option="c"><input type="radio" value="c"><span>Latent frequency decomposition of the query matrix</span></label>
-  </div>
-  <div class="feedback">
-    <div class="feedback-banner"></div>
-    <div class="feedback-explanation">Keyword matching finds documents containing the same terms as your question. It's simple and widely used. Many RAG systems combine keyword matching with AI-powered search for best results. The other two options are made-up terms.</div>
   </div>
 </div>
 
